@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getEmployeesHrm } from './helper/euApiCalls'
 import { useAuthContext } from '../../context/AuthContext'
 import Navbar from '../base/Navbar'
-import DefaultTable from '../base/Datatable'
+import DefaultTable from '../base/DefaultTable'
 import toast from 'react-hot-toast'
 
 const Employees = () => {
