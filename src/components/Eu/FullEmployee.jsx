@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { generatePay, getPayDetails } from './helper/euApiCalls'
+import { generatePay, getPayDetails, getPaySlip, postPayBill } from './helper/euApiCalls'
 import { useAuthContext } from '../../context/AuthContext'
 import { IoCloseCircle } from "react-icons/io5";
 import toast from 'react-hot-toast'
-
+import PaySlip from './PaySlip';
+import { usePDF } from 'react-to-pdf';
+ 
 
 const PayDetails = ({employee,setIsPayDetailsOpen = f=>f}) => {
     const [payDetails, setPayDetails] = useState([])
+    const [paySlip, setPaySlip] = useState(null)
     const {auth} = useAuthContext()
 
     const getDetails = () => {
@@ -23,12 +26,55 @@ const PayDetails = ({employee,setIsPayDetailsOpen = f=>f}) => {
         })
     }
 
+    const handleDownload = (e, pay_date) => {
+        e.preventDefault()
+
+        getPaySlip({_id: employee._id,pay_date: pay_date}, auth.endUser._id, auth.token).then(data => {
+            console.log(data);
+
+            if(data.success){
+                setPaySlip(data.paySlip)
+            }
+
+            toast.error('Faild to download pay slip.')
+        }).catch(error => {
+            console.log(error);
+        })
+
+    }
+
+    const handlePostpayBill = (e,pay_date) => {
+        e.preventDefault()
+        const data = {
+            _id: employee._id,
+            pay_date: pay_date
+        }
+
+        postPayBill(data,auth.endUser._id,auth.token).then(response => {
+            console.log(response)
+            if(response.success){
+                toast.success('Pay bill posted successfully')
+                getDetails()
+            }
+
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
     useEffect(()=>{
         getDetails()
     },[])
 
     return(
         <div className='w-[80%] h-[80%] rounded border-2 bg-white shadow-lg absolute p-4'>
+            {
+                paySlip && (
+                <div className='absolute bg-white top-0 left-0 w-full h-full overflow-y-scroll'>
+                    <PaySlip paySlip={paySlip} setPaySlip={setPaySlip} />
+                </div>
+                )
+            }
             <IoCloseCircle onClick={e => setIsPayDetailsOpen(false)} className='text-rose-600 cursor-pointer absolute right-[-10px] top-[-10px] text-[44px]' />
             <h4 className='underline'>Pay Details</h4>
 
@@ -105,11 +151,13 @@ const PayDetails = ({employee,setIsPayDetailsOpen = f=>f}) => {
 
                             <div></div>
                             <div></div>
-                            <div></div>
-                            <div></div>
+                            <div className={`p-2 rounded ${pay.status === 'Posted' ? 'bg-emerald-500': 'bg-amber-500'}`}>Status: {pay.status ? pay.status : 'Pending'}</div>
+                            <div>
+                                <h4 onClick={e=> handlePostpayBill(e,pay.pay_date)} className='underline text-zinc-100 cursor-pointer p-2 rounded bg-purple-600 text-center'>Post pay bill</h4>
+                            </div>
 
                             <div>
-                                <h4 className='underline text-zinc-100 cursor-pointer p-2 rounded bg-sky-600 text-center'>Download Pay Slip</h4>
+                                <h4 onClick={e => handleDownload(e,pay.pay_date)} className='underline text-zinc-100 cursor-pointer p-2 rounded bg-sky-600 text-center'>View Pay Slip</h4>
                             </div>
 
                         </div>
