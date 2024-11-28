@@ -120,7 +120,7 @@ const PayDetails = ({employee,setIsPayDetailsOpen = f=>f}) => {
     )
 }
 
-const FullEmployee = ({employee}) => {
+const FullEmployee = ({employee,isFullEmployeeOpen = f => f}) => {
     const [openPayGenaration, setOpenPayGenaration] = useState(false)
     const [openPayDetails, setOpenPayDetails] = useState(false)
     const [temporaries,setTemporaries] = useState({
@@ -149,7 +149,8 @@ const FullEmployee = ({employee}) => {
     }
   return (
     <div className='w-screen h-screen fixed top-0 left-0 bg-[#00000080] flex items-center justify-center z-[3000000]'>
-        <div className='w-[80%] h-[80%] rounded p-4 bg-white'>
+        <div className='w-[80%] h-[80%] rounded p-4 bg-white relative top-0'>
+        <IoCloseCircle onClick={e => isFullEmployeeOpen(null)} className='text-rose-600 cursor-pointer absolute right-[-10px] top-[-10px] text-[44px]' />
             <h3>{employee.fullname}</h3>
             <h4>{employee.emp_id}</h4>
             <br />

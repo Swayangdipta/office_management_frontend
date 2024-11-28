@@ -57,7 +57,7 @@ const DefaultTable = (data) => {
 
       {
         currentEmployee && (
-          <FullEmployee employee={currentEmployee} />
+          <FullEmployee employee={currentEmployee} isFullEmployeeOpen={setCurrentEmployee} />
         )
       }
     </div>
