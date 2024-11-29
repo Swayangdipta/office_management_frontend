@@ -25,7 +25,16 @@ function Routing() {
           <Route path="/admin" element={auth && auth.admin ? <AdminDashboard /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
           <Route path='/employees' element={auth ? <Employees /> : <Auth type='eu' />} />
         </Routes>
-        <Toaster />
+        <Toaster         toastOptions={{
+          // Apply z-index via toast options
+          style: {
+            zIndex: 99999999, // Set the desired z-index
+          },
+        }}
+        containerStyle={{
+          // Set container-level styles
+          zIndex: 99999999, // Ensures the container stays above other elements
+        }} />
       </BrowserRouter>
     </>
   )

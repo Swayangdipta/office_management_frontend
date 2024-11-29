@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "simple-datatables";
 import "simple-datatables/dist/style.css"; // Import the DataTable CSS for styling
 import FullEmployee from "../Eu/FullEmployee";
+import EmployeeManageForm from "../Eu/EmployeeManageForm";
+import DeletionModal from "../Eu/DeletionModal";
 
 const DefaultTable = (data) => {
 
   const [currentEmployee, setCurrentEmployee] = useState(null)
-    
+  const [editEmployee,setEditEmployee] = useState(null)
+  const [isConfirmationOpen,setIsConfirmationOpen] = useState(null)
+  const [toRemove,setToRemove] = useState(null)
+
   useEffect(() => {
     const tableElement = document.getElementById("default-table");
     if (tableElement) {
@@ -19,6 +24,12 @@ const DefaultTable = (data) => {
       });
     }
   }, []);
+
+  useEffect(()=>{
+    if(toRemove){
+      data = data.filter(item => item.id !== toRemove)
+    }
+  },[toRemove])
 
   return (
     <div className="overflow-hidden">
@@ -45,8 +56,8 @@ const DefaultTable = (data) => {
                     <td className="border border-gray-300 px-4 py-2">{employee.emp_id}</td>
                     <td className="border border-gray-300 px-4 py-2">{employee.date_of_birth.slice(0,10)}</td>
                     <td className="border border-gray-300 px-4 py-2 flex items-center justify-between">
-                        <p className="font-bold underline text-sky-600 cursor-pointer">Edit</p>
-                        <p className="font-bold underline text-rose-600 cursor-pointer">Delete</p>
+                        <p onClick={e => setEditEmployee(employee._id)} className="font-bold underline text-sky-600 cursor-pointer">Edit</p>
+                        <p onClick={e => setIsConfirmationOpen(employee._id)} className="font-bold underline text-rose-600 cursor-pointer">Delete</p>
                         <p onClick={e => setCurrentEmployee(employee)} className="font-bold underline text-amber-600 cursor-pointer">More</p>
                     </td>
                 </tr>
@@ -58,6 +69,16 @@ const DefaultTable = (data) => {
       {
         currentEmployee && (
           <FullEmployee employee={currentEmployee} isFullEmployeeOpen={setCurrentEmployee} />
+        )
+      }
+      {
+        editEmployee && (
+          <EmployeeManageForm employee_id={editEmployee} type="edit" setIsFormOpen={setEditEmployee} />
+        )
+      }
+      {
+        isConfirmationOpen && (
+          <DeletionModal setIsConfirmationOpen={setIsConfirmationOpen} employee_id={isConfirmationOpen} setToRemove={setToRemove} />
         )
       }
     </div>

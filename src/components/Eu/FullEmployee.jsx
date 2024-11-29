@@ -171,11 +171,14 @@ const PayDetails = ({employee,setIsPayDetailsOpen = f=>f}) => {
 const FullEmployee = ({employee,isFullEmployeeOpen = f => f}) => {
     const [openPayGenaration, setOpenPayGenaration] = useState(false)
     const [openPayDetails, setOpenPayDetails] = useState(false)
+    const [openGenerateLPC, setOpenGenerateLPC] = useState(false)
     const [temporaries,setTemporaries] = useState({
-        pay_date: ''
+        pay_date: '',
+        lpcdate: ''
     })
+    const [lpc,setLpc] = useState(null)
 
-    const {pay_date} = temporaries
+    const {pay_date,lpcdate} = temporaries
     const {auth} = useAuthContext()
 
     const handlePayGeneration = (e) => {
@@ -195,6 +198,23 @@ const FullEmployee = ({employee,isFullEmployeeOpen = f => f}) => {
             console.log(error)
         })
     }
+
+    const handleLPCGeneration = (e) => {
+        e.preventDefault()
+        getPaySlip({_id: employee._id,pay_date: lpcdate}, auth.endUser._id, auth.token).then(data => {
+            console.log(data);
+
+            if(data.success){
+                // setPaySlip(data.paySlip)
+                setLpc(data.paySlip)
+                return
+            }
+            
+            toast.error('Faild to generate LPC.')
+        }).catch(error => {
+            console.log(error);
+        })
+    }
   return (
     <div className='w-screen h-screen fixed top-0 left-0 bg-[#00000080] flex items-center justify-center z-[3000000]'>
         <div className='w-[80%] h-[80%] rounded p-4 bg-white relative top-0'>
@@ -205,7 +225,7 @@ const FullEmployee = ({employee,isFullEmployeeOpen = f => f}) => {
             <div className='flex flex-wrap gap-2'>
                 <div onClick={e => setOpenPayGenaration(true)} className='w-[200px] h-[100px] rounded border shadow-sm bg-zinc-600 text-white flex items-center justify-center cursor-pointer'>Pay Genaration</div>
                 <div onClick={e => setOpenPayDetails(true)} className='w-[200px] h-[100px] rounded border shadow-sm bg-zinc-600 text-white flex items-center justify-center cursor-pointer'>Get Pay Details</div>
-                <div className='w-[200px] h-[100px] rounded border shadow-sm bg-zinc-600 text-white flex items-center justify-center cursor-pointer'>Remittances</div>
+                <div onClick={e => setOpenGenerateLPC(true)} className='w-[200px] h-[100px] rounded border shadow-sm bg-zinc-600 text-white flex items-center justify-center cursor-pointer'>Generate LPC</div>
             </div>
         </div>
 
@@ -230,8 +250,37 @@ const FullEmployee = ({employee,isFullEmployeeOpen = f => f}) => {
         }
 
         {
+            openGenerateLPC && (
+                <div className='w-[300px] h-[300px] rounded border-2 bg-white shadow-lg absolute p-2'>
+                    <IoCloseCircle onClick={e => setOpenGenerateLPC(false)} className='text-rose-600 cursor-pointer absolute right-[-10px] top-[-10px] text-[44px]' />
+                    <h4 className='underline'>Pay Genaration</h4>
+                    <form className='mt-2'>
+                        <div className='flex flex-wrap gap-2'>
+                            <label htmlFor="Employee_id">Employee Id</label>
+                            <input className='rounded' name='Employee_id' value={employee.emp_id} type="text" disabled />
+                        </div>
+                        <div className='flex flex-col gap-2 mt-2'>
+                            <label htmlFor="pay_date">Pay Date</label>
+                            <input className='rounded' name='pay_date' value={lpcdate} onChange={e => setTemporaries({...temporaries,lpcdate: e.target.value})} type="date" />
+                        </div>
+                        <button onClick={handleLPCGeneration} type="submit" className='bg-sky-600 rounded mt-4 text-white shadow-sm'>Generate</button>
+                    </form>
+                </div>
+            )
+        }
+
+        {
             openPayDetails && (
                 <PayDetails setIsPayDetailsOpen={setOpenPayDetails} employee={employee} />
+            )
+        }
+        {
+            lpc && (
+                <div className='w-screen h-screen fixed top-0 flex items-center justify-center'>
+                    <div className='w-[80%] h-[80%] bg-white overflow-y-scroll relative top-0'>
+                        <PaySlip paySlip={lpc} setPaySlip={setLpc} />
+                    </div>
+                </div>
             )
         }
     </div>

@@ -34,6 +34,34 @@ export const addEmployeeHrm = (data,id,token,degnId) => {
             })
 }
 
+export const editEmployeeHrm = (data,id,token,emp_id) => {
+    return axios.put(`${env.VITE_BACKEND}/hrm/employee/${emp_id}/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
+export const deleteEmployeeHrm = (id,token,emp_id) => {    
+    return axios.delete(`${env.VITE_BACKEND}/hrm/employee/${emp_id}/${id}`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
 export const getDesignations = (id,token) => {
     return axios.post(`${env.VITE_BACKEND}/hrm/designations/${id}`,{},{
         headers: {
@@ -106,5 +134,33 @@ export const postPayBill = (data,id,token) => {
             }).catch(error => {
                 console.log(error);
                 return {error: error}
+            })
+}
+
+export const postRemittances = (data,id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/hrm/remittance/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
+export const getEmployee = (id,token,emp_id) => {
+    return axios.post(`${env.VITE_BACKEND}/hrm/employee/${emp_id}/${id}`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
             })
 }

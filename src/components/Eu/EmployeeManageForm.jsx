@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { IoCloseCircle } from "react-icons/io5";
-import { addEmployeeHrm, getDesignations } from './helper/euApiCalls';
+import { addEmployeeHrm, editEmployeeHrm, getDesignations, getEmployee } from './helper/euApiCalls';
 import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 
-const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f}) => {
+const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = ''}) => {
     const [employee, setEmployee] = useState({
         fullname: "",
         date_of_birth: "", // Use a string for dates initially, e.g., 'YYYY-MM-DD'
@@ -69,6 +69,21 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f}) => {
         }
       }
 
+      const handleEdit = (updatedEmployee) => {
+        editEmployeeHrm(updatedEmployee,endUser._id,token,employee_id).then(data => {
+            console.log(data);
+            
+            if(data.success){
+                toast.success("Employee Updated Successfully")
+                setIsFormOpen(false)
+            }else{
+                toast.error("Failed to Update Employee")
+            }
+        }).catch(error => {
+            toast.error(error?.response?.data?.error)
+        })
+      }
+
       const handleSubmit = async (e) => {
         e.preventDefault();
       
@@ -93,10 +108,13 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f}) => {
       
         // Update the state
         setEmployee(updatedEmployee);
+
+        if(type !== "add"){
+            handleEdit(updatedEmployee)
+            return
+        }
       
         addEmployeeHrm(updatedEmployee,endUser._id,token,designation).then(data => {
-            console.log(data);
-            
             if(data.success){
                 toast.success("Employee Added Successfully")
                 setIsFormOpen(false)
@@ -119,8 +137,50 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f}) => {
             console.log(error);
         })
       }
+
+      const getEmployeeData = () => {
+        getEmployee(endUser._id,token,employee_id).then(employeeData => {
+            console.log();
+            
+            if(employeeData.success){
+                setEmployee({
+                    fullname: employeeData.data.fullname,
+                    date_of_birth: employeeData.data.date_of_birth.slice(0,10), // Use a string for dates initially, e.g., 'YYYY-MM-DD'
+                    cid: employeeData.data.cid,
+                    emp_id: employeeData.data.emp_id || "", // Ensure emp_id is optional
+                    tpn_acc_num: employeeData.data.tpn_acc_num || "",
+                    has_gis: employeeData.data.has_gis || false,
+                    gis_acc_num: employeeData.data.gis_acc_num || "",
+                    has_pf: employeeData.data.has_pf || false,
+                    pf_acc_num: employeeData.data.pf_acc_num || "",
+                    sav_acc_num: employeeData.data.sav_acc_num || "",
+                    bank_name: employeeData.data.bank_name || "",
+                    bank_branch: employeeData.data.bank_branch || "",
+                  });
+                  
+                  setMiscellenous({
+                    pf: employeeData.data.deductions.pf || 0,
+                    gis: employeeData.data.deductions.gis || 0,
+                    tds: employeeData.data.deductions.tds || 0,
+                    basic_pay: employeeData.data.benefits.basic_pay || 0,
+                    allowances: employeeData.data.benefits.allowances || 0,
+                    tempQualifications: employeeData.data.qualifications.join(', ') || [],
+                  })
+
+                  return
+            }
+
+            return toast.error('Faild to load employee information')
+        }).catch(error => {
+            console.log(error);
+            return toast.error('Faild to load employee information')
+        })
+      }
       
       useEffect(()=>{
+        if(type !== "add"){
+            getEmployeeData()
+        }
         fetchDesignations()
       },[])
 
@@ -166,7 +226,13 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f}) => {
                     placeholder="Employee Id"
                     required
                     value={emp_id}
-                    onChange={e => handleChange(e, 'emp_id')}
+                    onChange={e => {
+                        if(type === "add"){
+                            handleChange(e, 'emp_id')
+                        }
+                    }}
+
+                    disabled={type === "edit" ? true : false} 
                 />
                 </div>
                 <div>
@@ -489,7 +555,9 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f}) => {
                     clipRule="evenodd"
                 ></path>
                 </svg>
-                Add Employee
+                {
+                    type === 'add' ? 'Add Employee' : 'Update Employee'
+                }
             </button>
         </form>
     </div>
