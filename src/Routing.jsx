@@ -10,6 +10,7 @@ import Employees from './components/Eu/Employees.jsx'
 import AssetCategory from './components/admin/AssetCategory.jsx'
 import AssetDetails from './components/Sars/AssetDetails.jsx'
 import StockDetails from './components/Sars/StockDetails.jsx'
+import ReportsPage from './components/Sars/ReportsSars.jsx'
 function Routing() {
   const {auth,setAuth} = useAuthContext()
 
@@ -29,6 +30,7 @@ function Routing() {
           <Route path='/employees' element={auth && auth.endUser.role === "HRM"  ? <Employees /> : <Navigate to='/' />} />
           <Route path='/sars/asset' element={auth && auth.endUser.role === "SAM" ? <AssetDetails /> : <Navigate to='/' />} />
           <Route path='/sars/stock' element={auth && auth.endUser.role === "SAM" ? <StockDetails /> : <Navigate to='/' />} />
+          <Route path='/sars/reports' element={auth && auth.endUser.role === "SAM" ? <ReportsPage /> : <Navigate to='/' />} />
         </Routes>
         <Toaster         toastOptions={{
           // Apply z-index via toast options
