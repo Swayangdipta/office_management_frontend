@@ -15,8 +15,6 @@ const EuDashboard = () => {
     return (
       <>
         <Card title="Employees" Icon={FaUsers} link='/employees' />
-        <Card title="Pay Bill" Icon={RiBillFill} link='/paybill' />
-        <Card title="Pay Slip" Icon={HiDocumentArrowDown} link='/payslip' />
         <Card title="Remittances" Icon={RiBankLine} link='/remittances' />
         <Card title="Reports" Icon={BiSolidReport} link='/reports' />
       </>
@@ -25,7 +23,15 @@ const EuDashboard = () => {
 
   const am = () => {}
 
-  const sam = () => {}
+  const sam = () => {
+    return (
+      <>
+        <Card title="Assets" Icon={FaUsers} link='/sars/asset' />
+        <Card title="Stocks" Icon={RiBillFill} link='/sars/stock' />
+        <Card title="Reports" Icon={BiSolidReport} link='/sars/reports' />
+      </>
+    )
+  }
   return (
     <div className='w-screen min-h-screen h-max'>
       <Navbar />

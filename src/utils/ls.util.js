@@ -23,3 +23,13 @@ export const getAuthFromSessionStorage = () => {
         return null;
     }
 };
+
+export const removeAuthFromSessionStorage = () => {
+    try {
+        // Remove the "auth" item from session storage
+        sessionStorage.removeItem("auth");
+        return true;
+    } catch (error) {
+        return false;
+    }
+};

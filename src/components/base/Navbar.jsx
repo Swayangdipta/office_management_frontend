@@ -1,9 +1,10 @@
 import React from 'react'
 import { useAuthContext } from '../../context/AuthContext'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { removeAuthFromSessionStorage } from '../../utils/ls.util'
 
 const Navbar = () => {
-    const {auth} = useAuthContext()
+    const {auth,setAuth} = useAuthContext()
 
     const hrm = () => {
         return (
@@ -11,15 +12,9 @@ const Navbar = () => {
                 <li>
                     <Link to="/employees" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Employees</Link>
                 </li>
-                <li>
-                    <Link to="/paybill" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Pay Bill</Link>
-                </li>
-                <li>
-                    <Link to="/payslip" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Pay Slip</Link>
-                </li>
-                <li>
+                {/* <li>
                     <Link to="/remittances" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Remittances</Link>
-                </li>
+                </li> */}
                 <li>
                     <Link to="/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Reports</Link>
                 </li>
@@ -29,13 +24,36 @@ const Navbar = () => {
 
     const am = () => {}
 
-    const sam = () => {}
+    const sam = () => {
+        return (
+            <>
+                <li>
+                    <Link to="/sars/asset" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Assets</Link>
+                </li>
+                <li>
+                    <Link to="/sars/stock" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Stocks</Link>
+                </li>
+                <li>
+                    <Link to="/sars/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Reports</Link>
+                </li>
+            </>
+        )
+    }
+
+    const signout = () => {
+        const result = removeAuthFromSessionStorage()
+
+        if(true){
+            setAuth(undefined)
+            return <Navigate to='/' />
+        }
+    }
   return (
  
 
 <nav class="bg-gray-50 w-full border-gray-200 dark:bg-gray-900 fixed top-0 left-0 z-[1000000]">
   <div class="max-w-screen flex flex-wrap items-center justify-between mx-auto p-4">
-    <Link href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+    <Link to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Company</span>
     </Link>
@@ -58,7 +76,7 @@ const Navbar = () => {
                     auth.endUser.role === "HRM" ? hrm() : auth.endUser.role === "AM" ? am() : auth.endUser.role === "SAM" ? sam() : ""
                 }
 
-                <li>
+                <li onClick={signout}>
                     <Link href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
                 </li>
             </ul>
