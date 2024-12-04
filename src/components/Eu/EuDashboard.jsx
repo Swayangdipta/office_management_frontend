@@ -5,6 +5,7 @@ import { FaUsers } from "react-icons/fa"; // Replace with the desired icon from 
 import { RiBillFill, RiBankLine } from "react-icons/ri";
 import { HiDocumentArrowDown } from "react-icons/hi2";
 import { BiSolidReport } from "react-icons/bi";
+import { MdWebAsset, MdInventory, MdBadge } from "react-icons/md";
 import Card from '../base/Card'
 
 const EuDashboard = () => {
@@ -26,8 +27,8 @@ const EuDashboard = () => {
   const sam = () => {
     return (
       <>
-        <Card title="Assets" Icon={FaUsers} link='/sars/asset' />
-        <Card title="Stocks" Icon={RiBillFill} link='/sars/stock' />
+        <Card title="Assets" Icon={MdWebAsset} link='/sars/asset' />
+        <Card title="Stocks" Icon={MdInventory} link='/sars/stock' />
         <Card title="Reports" Icon={BiSolidReport} link='/sars/reports' />
       </>
     )

@@ -11,6 +11,9 @@ import AssetCategory from './components/admin/AssetCategory.jsx'
 import AssetDetails from './components/Sars/AssetDetails.jsx'
 import StockDetails from './components/Sars/StockDetails.jsx'
 import ReportsPage from './components/Sars/ReportsSars.jsx'
+import AssetType from './components/admin/AssetType.jsx'
+import StockType from './components/admin/StockType.jsx'
+import Designations from './components/admin/Designations.jsx'
 function Routing() {
   const {auth,setAuth} = useAuthContext()
 
@@ -27,10 +30,14 @@ function Routing() {
         <Routes>
           <Route path="/" element={auth && auth.endUser ? <EuDashboard /> : auth ? <AdminDashboard /> : <Auth type='eu' />} />
           <Route path="/admin" element={auth && auth.admin ? <AdminDashboard /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
-          <Route path='/employees' element={auth && auth.endUser.role === "HRM"  ? <Employees /> : <Navigate to='/' />} />
-          <Route path='/sars/asset' element={auth && auth.endUser.role === "SAM" ? <AssetDetails /> : <Navigate to='/' />} />
-          <Route path='/sars/stock' element={auth && auth.endUser.role === "SAM" ? <StockDetails /> : <Navigate to='/' />} />
-          <Route path='/sars/reports' element={auth && auth.endUser.role === "SAM" ? <ReportsPage /> : <Navigate to='/' />} />
+          <Route path="/admin/asset-category" element={auth && auth.admin ? <AssetCategory /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
+          <Route path="/admin/asset-type" element={auth && auth.admin ? <AssetType /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
+          <Route path="/admin/stock-type" element={auth && auth.admin ? <StockType /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
+          <Route path="/admin/designations" element={auth && auth.admin ? <Designations /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
+          <Route path='/employees' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <Employees /> : <Navigate to='/' />} />
+          <Route path='/sars/asset' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <AssetDetails /> : <Navigate to='/' />} />
+          <Route path='/sars/stock' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <StockDetails /> : <Navigate to='/' />} />
+          <Route path='/sars/reports' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <ReportsPage /> : <Navigate to='/' />} />
         </Routes>
         <Toaster         toastOptions={{
           // Apply z-index via toast options
