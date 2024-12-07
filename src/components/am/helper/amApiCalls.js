@@ -172,3 +172,60 @@ export const getAllAccountHeadAM = (userId,token) => {
         console.error('Error deleting party', error);
       }
 }
+
+export const getBankTransactions = (userId,token) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/statement/${userId}`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error deleting party', error);
+      }
+}
+
+export const reconcileTransaction = (userId,token) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/am//bank-reconciliation/statement/${userId}`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error deleting party', error);
+      }
+}
+
+export const createBankTransaction = (userId,token) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/am//bank-reconciliation/statement/${userId}`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error deleting party', error);
+      }
+}

@@ -18,6 +18,7 @@ import AccountHead from './components/admin/AccountHead.jsx'
 import AccountHeadManagement from './components/admin/AccountHeadManagement.jsx'
 import PartyMasterPage from './components/am/PartyMasterPage.jsx'
 import VoucherForm from './components/am/Voucher.jsx'
+import BankReconciliation from './components/am/BankReconciliation.jsx'
 function Routing() {
   const {auth,setAuth} = useAuthContext()
 
@@ -45,6 +46,7 @@ function Routing() {
           <Route path='/sars/reports' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <ReportsPage /> : <Navigate to='/' />} />
           <Route path='/am/party' element={auth && auth.endUser && auth.endUser.role === "AM" ? <PartyMasterPage /> : <Navigate to='/' />} />
           <Route path='/am/voucher' element={auth && auth.endUser && auth.endUser.role === "AM" ? <VoucherForm /> : <Navigate to='/' />} />
+          <Route path='/am/bank-reconsiliation' element={auth && auth.endUser && auth.endUser.role === "AM" ? <BankReconciliation /> : <Navigate to='/' />} />
         </Routes>
         <Toaster         toastOptions={{
           // Apply z-index via toast options

@@ -61,10 +61,10 @@ const Navbar = ({type = 'eu'}) => {
                 <Link to="/am/party" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Party Master</Link>
             </li>
             <li>
-                <Link to="/am/stock" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Stocks</Link>
+                <Link to="/am/voucher" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Voucher</Link>
             </li>
             <li>
-                <Link to="/am/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Designations</Link>
+                <Link to="/am/bank-reconsiliation" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Bank Reconcilition</Link>
             </li>
         </>
         )

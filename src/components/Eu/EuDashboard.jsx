@@ -26,7 +26,8 @@ const EuDashboard = () => {
     return(
       <>
       <Card title="Party Master" Icon={MdWebAsset} link='/am/party' />
-      <Card title="voucher" Icon={RiBankLine} link='/am/voucher' />
+      <Card title="Voucher" Icon={RiBankLine} link='/am/voucher' />
+      <Card title="Bank Reconciliation" Icon={RiBankLine} link='/am/bank-reconsiliation' />
       <Card title="Reports" Icon={BiSolidReport} link='/am/reports' />
     </>
     )
