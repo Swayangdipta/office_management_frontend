@@ -22,7 +22,15 @@ const EuDashboard = () => {
     )
   }
 
-  const am = () => {}
+  const am = () => {
+    return(
+      <>
+      <Card title="Party Master" Icon={MdWebAsset} link='/am/party' />
+      <Card title="voucher" Icon={RiBankLine} link='/am/voucher' />
+      <Card title="Reports" Icon={BiSolidReport} link='/am/reports' />
+    </>
+    )
+  }
 
   const sam = () => {
     return (

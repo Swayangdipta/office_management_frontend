@@ -22,6 +22,54 @@ const Navbar = ({type = 'eu'}) => {
         )
     }
 
+    const hrm = () => {
+        return (
+        <>
+            <li>
+                <Link to="/employees" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Employees</Link>
+            </li>
+            <li>
+                <Link to="/remittances" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Remittances</Link>
+            </li>
+            <li>
+                <Link to="/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Reports</Link>
+            </li>
+        </>
+        )
+    }
+
+    const sam = () => {
+        return (
+        <>
+            <li>
+                <Link to="/sars/asset" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Assets</Link>
+            </li>
+            <li>
+                <Link to="/sars/stock" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Stocks</Link>
+            </li>
+            <li>
+                <Link to="/sars/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Reports</Link>
+            </li>
+        </>
+        )
+    }
+
+    const am = () => {
+        return (
+        <>
+            <li>
+                <Link to="/am/party" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Party Master</Link>
+            </li>
+            <li>
+                <Link to="/am/stock" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Stocks</Link>
+            </li>
+            <li>
+                <Link to="/am/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Designations</Link>
+            </li>
+        </>
+        )
+    }
+
     const signout = () => {
         const result = removeAuthFromSessionStorage()
 
