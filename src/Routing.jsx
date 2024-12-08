@@ -19,6 +19,7 @@ import AccountHeadManagement from './components/admin/AccountHeadManagement.jsx'
 import PartyMasterPage from './components/am/PartyMasterPage.jsx'
 import VoucherForm from './components/am/Voucher.jsx'
 import BankReconciliation from './components/am/BankReconciliation.jsx'
+import AdminEndUserManagement from './components/admin/AdminEndUserManagement.jsx'
 function Routing() {
   const {auth,setAuth} = useAuthContext()
 
@@ -40,6 +41,7 @@ function Routing() {
           <Route path="/admin/stock-type" element={auth && auth.admin ? <StockType /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
           <Route path="/admin/designations" element={auth && auth.admin ? <Designations /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
           <Route path="/admin/account-head" element={auth && auth.admin ? <AccountHeadManagement /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
+          <Route path="/admin/end-users" element={auth && auth.admin ? <AdminEndUserManagement /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
           <Route path='/employees' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <Employees /> : <Navigate to='/' />} />
           <Route path='/sars/asset' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <AssetDetails /> : <Navigate to='/' />} />
           <Route path='/sars/stock' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <StockDetails /> : <Navigate to='/' />} />

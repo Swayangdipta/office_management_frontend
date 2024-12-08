@@ -433,3 +433,41 @@ export const getAccountingHeads = (id, token) => {
         return { error: error.message }; // Return the error message
     });
 }
+
+export const getEndUsers = (id,token) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/admin/eu/${id}`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error fetching types', error);
+      }
+}
+
+export const createEndUsers = (id,token,data) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/admin/eu/cr/${id}`,data,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error fetching types', error);
+      }
+}
