@@ -229,3 +229,40 @@ export const createBankTransaction = (userId,token,data) => {
         console.error('Error deleting party', error);
       }
 }
+export const closeMonth = (userId,token) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/am/process/close-month/${userId}`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error deleting party', error);
+      }
+}
+
+export const closeYear = (userId,token) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/am/process/close-year/${userId}`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error deleting party', error);
+      }
+}
