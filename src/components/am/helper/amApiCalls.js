@@ -192,9 +192,9 @@ export const getBankTransactions = (userId,token) => {
       }
 }
 
-export const reconcileTransaction = (userId,token) => {
+export const reconcileTransaction = (userId,token,transactionId) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am//bank-reconciliation/statement/${userId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/reconcile/${userId}/${transactionId}`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -211,9 +211,9 @@ export const reconcileTransaction = (userId,token) => {
       }
 }
 
-export const createBankTransaction = (userId,token) => {
+export const createBankTransaction = (userId,token,data) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am//bank-reconciliation/statement/${userId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/create/${userId}`,data,{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',

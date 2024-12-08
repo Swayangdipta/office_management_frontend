@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Select from 'react-select';
 import { Table, Button, Badge, Modal } from 'flowbite-react';
 import { getBankTransactions, reconcileTransaction, createBankTransaction, getAllVouchers } from './helper/amApiCalls';
 import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
+import Navbar from '../base/Navbar';
 
 const BankReconciliation = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -41,7 +41,7 @@ const BankReconciliation = () => {
         const response = await getAllVouchers(endUser._id, token);
         if (response.success) {
           setVoucherOptions(
-            response.data.map(voucher => ({
+            response.data.map((voucher) => ({
               value: voucher._id,
               label: `${voucher._id} - ${voucher.narration} - ${voucher?.payee?.name}`,
             }))
@@ -60,12 +60,12 @@ const BankReconciliation = () => {
 
   const onSubmit = async (data) => {
     try {
-        console.log('triggering');
-        
       const response = await createBankTransaction(endUser._id, token, data);
+      console.log(response);
+      
       if (response.success) {
         toast.success('Bank statement created successfully!');
-        setTransactions([...transactions, response.data]);
+        setTransactions((prev) => [...prev, response.data]);
         reset();
         setShowModal(false);
       } else {
@@ -82,7 +82,7 @@ const BankReconciliation = () => {
       const response = await reconcileTransaction(endUser._id, token, transactionId);
       if (response.success) {
         toast.success('Transaction reconciled successfully!');
-        setTransactions(
+        setTransactions((transactions) =>
           transactions.map((t) => (t._id === transactionId ? { ...t, reconciled: true } : t))
         );
       } else {
@@ -100,7 +100,10 @@ const BankReconciliation = () => {
   });
 
   return (
-    <div className="p-6">
+    <div className='w-screen min-h-screen h-max'>
+      <Navbar />
+
+      <div className="p-6 mt-[80px]">
       <h2 className="text-xl font-bold mb-4">Bank Reconciliation</h2>
       <div className="mb-4 flex space-x-4">
         <Button color={filter === 'all' ? 'blue' : 'gray'} onClick={() => setFilter('all')}>
@@ -112,7 +115,7 @@ const BankReconciliation = () => {
         <Button color={filter === 'unreconciled' ? 'blue' : 'gray'} onClick={() => setFilter('unreconciled')}>
           Unreconciled
         </Button>
-        <Button color="green" onClick={() => setShowModal(true)}>
+        <Button color="green" className='bg-emerald-300' onClick={() => setShowModal(true)}>
           Create Bank Statement
         </Button>
       </div>
@@ -168,16 +171,17 @@ const BankReconciliation = () => {
               <label htmlFor="voucher" className="block text-sm font-medium text-gray-700">
                 Voucher ID
               </label>
-              <Select
-                options={voucherOptions}
-                getOptionLabel={(option) => option.label} // Display full label as before
-                onChange={(selectedOption) => {
-                  // Update the form field with only the _id
-                  register('voucher').onChange(selectedOption ? selectedOption.value : '');
-                }}
+              <select
                 {...register('voucher', { required: true })}
-                className="mt-1 block w-full"
-              />
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+              >
+                <option value="">Select a Voucher</option>
+                {voucherOptions.map((voucher) => (
+                  <option key={voucher.value} value={voucher.value}>
+                    {voucher.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <Button type="submit" color="blue">
               Submit
@@ -187,26 +191,26 @@ const BankReconciliation = () => {
       </Modal>
 
       <Table striped={true}>
-        <Table.Head>
-          <Table.HeadCell>Date</Table.HeadCell>
-          <Table.HeadCell>Description</Table.HeadCell>
-          <Table.HeadCell>Debit</Table.HeadCell>
-          <Table.HeadCell>Credit</Table.HeadCell>
-          <Table.HeadCell>Status</Table.HeadCell>
-          <Table.HeadCell>Action</Table.HeadCell>
+        <Table.Head className='border'>
+          <Table.HeadCell className='bg-zinc-800 text-zinc-50'>Date</Table.HeadCell>
+          <Table.HeadCell className='bg-zinc-800 text-zinc-50'>Description</Table.HeadCell>
+          <Table.HeadCell className='bg-zinc-800 text-zinc-50'>Debit</Table.HeadCell>
+          <Table.HeadCell className='bg-zinc-800 text-zinc-50'>Credit</Table.HeadCell>
+          <Table.HeadCell className='bg-zinc-800 text-zinc-50'>Status</Table.HeadCell>
+          <Table.HeadCell className='bg-zinc-800 text-zinc-50'>Action</Table.HeadCell>
         </Table.Head>
         <Table.Body>
           {filteredTransactions.map((transaction) => (
-            <Table.Row key={transaction._id}>
+            <Table.Row key={transaction._id} className='border '>
               <Table.Cell>{new Date(transaction.date).toLocaleDateString()}</Table.Cell>
               <Table.Cell>{transaction.description}</Table.Cell>
               <Table.Cell>{transaction.debit.toFixed(2)}</Table.Cell>
               <Table.Cell>{transaction.credit.toFixed(2)}</Table.Cell>
               <Table.Cell>
                 {transaction.reconciled ? (
-                  <Badge color="green">Reconciled</Badge>
+                  <Badge color="green" className='bg-emerald-600 text-zinc-50'>Reconciled</Badge>
                 ) : (
-                  <Badge color="red">Unreconciled</Badge>
+                  <Badge color="red" className='bg-rose-600 text-zinc-50'>Unreconciled</Badge>
                 )}
               </Table.Cell>
               <Table.Cell>
@@ -220,6 +224,7 @@ const BankReconciliation = () => {
           ))}
         </Table.Body>
       </Table>
+    </div>
     </div>
   );
 };
