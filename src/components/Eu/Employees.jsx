@@ -7,7 +7,7 @@ import DefaultTable from '../base/DefaultTable'
 import toast from 'react-hot-toast'
 import EmployeeManageForm from './EmployeeManageForm'
 
-const Employees = () => {
+const Employees = ({type = 'eu'}) => {
     const {auth} = useAuthContext()
     const {endUser, token} = auth
     const [employees, setEmployees] = useState([])
@@ -26,7 +26,7 @@ const Employees = () => {
             return
         }
 
-        postRemittances(remittance, endUser._id, token).then(response => {            
+        postRemittances(remittance, endUser?._id, token).then(response => {            
             if(response.success) {
                 toast.success('Remittances posted successfully')
                 setIsRemitOpen(false)
@@ -47,7 +47,7 @@ const Employees = () => {
     }
 
     useEffect(() => {
-        getEmployeesHrm(1,endUser._id,token).then((data) => {
+        getEmployeesHrm(1,endUser?._id,token).then((data) => {
             if(data.error){
                 console.log(data.error);
                 
@@ -62,7 +62,7 @@ const Employees = () => {
     },[])
   return (
     <div className='w-screen h-max'>
-        <Navbar />
+        <Navbar type={type} />
 
         <div className='w-full flex items-center justify-between mt-[100px] px-4'>
             <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Employee Management</div>

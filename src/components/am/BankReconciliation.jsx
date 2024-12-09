@@ -13,7 +13,7 @@ import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import Navbar from '../base/Navbar';
 
-const BankReconciliation = () => {
+const BankReconciliation = ({typee = 'eu'}) => {
   const { register, handleSubmit, reset } = useForm();
   const [transactions, setTransactions] = useState([]);
   const [filter, setFilter] = useState('all'); // 'all', 'reconciled', 'unreconciled'
@@ -26,7 +26,7 @@ const BankReconciliation = () => {
   React.useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await getBankTransactions(endUser._id, token);
+        const response = await getBankTransactions(endUser?._id, token);
         if (response.success) {
           setTransactions(response.data);
         } else {
@@ -45,7 +45,7 @@ const BankReconciliation = () => {
   React.useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await getAllVouchers(endUser._id, token);
+        const response = await getAllVouchers(endUser?._id, token);
         if (response.success) {
           setVoucherOptions(
             response.data.map((voucher) => ({
@@ -67,7 +67,7 @@ const BankReconciliation = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await createBankTransaction(endUser._id, token, data);
+      const response = await createBankTransaction(endUser?._id, token, data);
       if (response.success) {
         toast.success('Bank statement created successfully!');
         setTransactions((prev) => [...prev, response.data]);
@@ -84,7 +84,7 @@ const BankReconciliation = () => {
 
   const handleReconcile = async (transactionId) => {
     try {
-      const response = await reconcileTransaction(endUser._id, token, transactionId);
+      const response = await reconcileTransaction(endUser?._id, token, transactionId);
       if (response.success) {
         toast.success('Transaction reconciled successfully!');
         setTransactions((transactions) =>
@@ -101,7 +101,7 @@ const BankReconciliation = () => {
 
   const handleMonthClose = async () => {
     try {
-      const response = await closeMonth(endUser._id, token);
+      const response = await closeMonth(endUser?._id, token);
       if (response.success) {
         toast.success('Month closed successfully!');
       } else {
@@ -115,7 +115,7 @@ const BankReconciliation = () => {
 
   const handleYearClose = async () => {
     try {
-      const response = await closeYear(endUser._id, token);
+      const response = await closeYear(endUser?._id, token);
       if (response.success) {
         toast.success('Year closed successfully!');
       } else {
@@ -134,7 +134,7 @@ const BankReconciliation = () => {
 
   return (
     <div className="w-screen min-h-screen h-max">
-      <Navbar />
+      <Navbar type={typee} />
 
       <div className="p-6 mt-[80px]">
         <h2 className="text-xl font-bold mb-4">Bank Reconciliation</h2>

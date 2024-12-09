@@ -13,7 +13,7 @@ const PayDetails = ({employee,setIsPayDetailsOpen = f=>f}) => {
     const {auth} = useAuthContext()
 
     const getDetails = () => {
-        getPayDetails({_id: employee._id}, auth.endUser._id, auth.token).then(data => {
+        getPayDetails({_id: employee._id}, auth.endUser?._id, auth.token).then(data => {
             if(data.success){
                 console.log(data);
                 setPayDetails(data.payDetails)
@@ -29,7 +29,7 @@ const PayDetails = ({employee,setIsPayDetailsOpen = f=>f}) => {
     const handleDownload = (e, pay_date) => {
         e.preventDefault()
 
-        getPaySlip({_id: employee._id,pay_date: pay_date}, auth.endUser._id, auth.token).then(data => {
+        getPaySlip({_id: employee._id,pay_date: pay_date}, auth.endUser?._id, auth.token).then(data => {
             console.log(data);
 
             if(data.success){
@@ -50,7 +50,7 @@ const PayDetails = ({employee,setIsPayDetailsOpen = f=>f}) => {
             pay_date: pay_date
         }
 
-        postPayBill(data,auth.endUser._id,auth.token).then(response => {
+        postPayBill(data,auth.endUser?._id,auth.token).then(response => {
             console.log(response)
             if(response.success){
                 toast.success('Pay bill posted successfully')
@@ -185,7 +185,7 @@ const FullEmployee = ({employee,isFullEmployeeOpen = f => f}) => {
         e.preventDefault()
         const data = {emp_id: employee.emp_id, pay_date: pay_date}
 
-        generatePay(data,auth.endUser._id,auth.token).then(response => {
+        generatePay(data,auth.endUser?._id,auth.token).then(response => {
             console.log(response);
             
             if(response.success){
@@ -201,7 +201,7 @@ const FullEmployee = ({employee,isFullEmployeeOpen = f => f}) => {
 
     const handleLPCGeneration = (e) => {
         e.preventDefault()
-        getPaySlip({_id: employee._id,pay_date: lpcdate}, auth.endUser._id, auth.token).then(data => {
+        getPaySlip({_id: employee._id,pay_date: lpcdate}, auth.endUser?._id, auth.token).then(data => {
             console.log(data);
 
             if(data.success){

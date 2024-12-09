@@ -7,7 +7,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import Navbar from "../base/Navbar";
 
-const PartyMasterPage = () => {
+const PartyMasterPage = ({type = 'eu'}) => {
   const [parties, setParties] = useState([]);
   const [selectedParty, setSelectedParty] = useState(null);
 
@@ -21,7 +21,7 @@ const PartyMasterPage = () => {
 
   const fetchParties = async () => {
     try {
-        const response = await getParties(endUser._id,token)
+        const response = await getParties(endUser?._id,token)
   
         if (response.success) setParties(response.data)
       } catch (error) {
@@ -33,7 +33,7 @@ const PartyMasterPage = () => {
   const handleAddOrUpdate = async (party) => {
     try {
       if (party._id) {
-        const response = await updateParty(endUser._id,token,party,party._id)
+        const response = await updateParty(endUser?._id,token,party,party._id)
 
         if (response.success) {
             toast.success('Party updated successfully.')
@@ -43,7 +43,7 @@ const PartyMasterPage = () => {
             return
         }
       } else {
-        const response = await postParty(endUser._id,token, party)
+        const response = await postParty(endUser?._id,token, party)
 
         if (response.success) {
             toast.success('Party added successfully.')
@@ -61,7 +61,7 @@ const PartyMasterPage = () => {
 
   const handleDelete = async (id) => {
     try {
-        const response = await deleteParty(endUser._id,token, id)
+        const response = await deleteParty(endUser?._id,token, id)
 
         if (response.success) {
             toast.success('Party deleted successfully.')
@@ -78,7 +78,7 @@ const PartyMasterPage = () => {
 
   return (
     <div className="w-screen min-h-screen h-max">
-        <Navbar />
+        <Navbar type={type} />
 
         <div className="p-6 mt-[100px]">
             <h1 className="text-2xl font-bold mb-4">Party Master</h1>

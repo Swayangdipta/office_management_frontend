@@ -4,7 +4,7 @@ const env = import.meta.env
 
 export const getParties = (userId,token) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/party-master/all/${userId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/party-master/all`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export const getParties = (userId,token) => {
 
 export const postParty = (userId,token,data) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/party-master/create/${userId}`,data,{
+        return axios.post(`${env.VITE_BACKEND}/am/party-master/create`,data,{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export const postParty = (userId,token,data) => {
 
 export const updateParty = (userId,token,data,partyId) => {
     try {
-        return axios.put(`${env.VITE_BACKEND}/am/party-master/${partyId}/${userId}`,data,{
+        return axios.put(`${env.VITE_BACKEND}/am/party-master/${partyId}`,data,{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const updateParty = (userId,token,data,partyId) => {
 
 export const deleteParty = (userId,token,partyId) => {
     try {
-        return axios.delete(`${env.VITE_BACKEND}/am/party-master/${partyId}/${userId}`,{},{
+        return axios.delete(`${env.VITE_BACKEND}/am/party-master/${partyId}`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ export const deleteParty = (userId,token,partyId) => {
 
 export const createVoucher = (userId,token,data) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/voucher/create/${userId}`,data,{
+        return axios.post(`${env.VITE_BACKEND}/am/voucher/create`,data,{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export const createVoucher = (userId,token,data) => {
 
 export const getAllVouchers = (userId,token) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/voucher/${userId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/voucher`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ export const getAllVouchers = (userId,token) => {
 
 export const updateVoucher = (userId,token,voucherId,data) => {
     try {
-        return axios.put(`${env.VITE_BACKEND}/am/voucher/${voucherId}/${userId}`,data,{
+        return axios.put(`${env.VITE_BACKEND}/am/voucher/${voucherId}`,data,{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ export const updateVoucher = (userId,token,voucherId,data) => {
 
 export const deleteVoucher = (userId,token,voucherId) => {
     try {
-        return axios.put(`${env.VITE_BACKEND}/am/voucher/${voucherId}/${userId}`,{},{
+        return axios.put(`${env.VITE_BACKEND}/am/voucher/${voucherId}`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ export const deleteVoucher = (userId,token,voucherId) => {
 
 export const getAllAccountHeadAM = (userId,token) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/voucher/ah/${userId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/voucher/ah`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ export const getAllAccountHeadAM = (userId,token) => {
 
 export const getBankTransactions = (userId,token) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/statement/${userId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/statement`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ export const getBankTransactions = (userId,token) => {
 
 export const reconcileTransaction = (userId,token,transactionId) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/reconcile/${userId}/${transactionId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/reconcile/${transactionId}`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -213,7 +213,7 @@ export const reconcileTransaction = (userId,token,transactionId) => {
 
 export const createBankTransaction = (userId,token,data) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/create/${userId}`,data,{
+        return axios.post(`${env.VITE_BACKEND}/am/bank-reconciliation/create`,data,{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -231,7 +231,7 @@ export const createBankTransaction = (userId,token,data) => {
 }
 export const closeMonth = (userId,token) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/process/close-month/${userId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/process/close-month`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -250,7 +250,7 @@ export const closeMonth = (userId,token) => {
 
 export const closeYear = (userId,token) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/process/close-year/${userId}`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/process/close-year`,{},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',

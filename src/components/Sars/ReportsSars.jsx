@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import * as XLSX from "xlsx"; // Import xlsx library
 import Navbar from "../base/Navbar";
 
-const ReportsPage = () => {
+const ReportsPage = ({type = 'eu'}) => {
   const [activeTab, setActiveTab] = useState("assetCategories");
   const [assetCategories, setAssetCategories] = useState([]);
   const [assetDetails, setAssetDetails] = useState([]);
@@ -17,7 +17,7 @@ const ReportsPage = () => {
 
   const fetchReports = () => {
     // Fetch Asset Categories
-    getAssetCategoriesSars(auth.endUser._id, token)
+    getAssetCategoriesSars(auth.endUser?._id, token)
       .then((res) => {
         if (res.success) {
           setAssetCategories(res.data);
@@ -31,7 +31,7 @@ const ReportsPage = () => {
       });
 
     // Fetch Asset Details
-    getAssetDetailsSars(auth.endUser._id, token)
+    getAssetDetailsSars(auth.endUser?._id, token)
       .then((res) => {
         if (res.success) {
           setAssetDetails(res.data);
@@ -45,7 +45,7 @@ const ReportsPage = () => {
       });
 
     // Fetch Stock Types
-    getStockTypeesSars(auth.endUser._id, token)
+    getStockTypeesSars(auth.endUser?._id, token)
       .then((res) => {
         if (res.success) {
           setStockTypes(res.data);
@@ -59,7 +59,7 @@ const ReportsPage = () => {
       });
 
     // Fetch Stock Details
-    getStockDetailsSars(auth.endUser._id, token)
+    getStockDetailsSars(auth.endUser?._id, token)
       .then((res) => {
         if (res.success) {
           setStockDetails(res.data);
@@ -224,7 +224,7 @@ const ReportsPage = () => {
 
   return (
     <div className="mx-auto p-6 w-screen relative top-0 left-0 min-h-screen h-max">
-        <Navbar />
+        <Navbar type={type} />
       <h2 className="text-2xl font-semibold mb-6 mt-[80px]">Reports</h2>
       <div className="mb-4 w-screen">
         <button

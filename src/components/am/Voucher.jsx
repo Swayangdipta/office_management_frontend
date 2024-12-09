@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { MdClose } from 'react-icons/md';
 import VouchersList from './VoucherList';
 
-const VoucherForm = ({ voucher = null, onClose = () => {} }) => {
+const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
   const [payees, setPayees] = useState([]);
   const [accountHeads, setAccountHeads] = useState([]);
   const { auth } = useAuthContext();
@@ -16,14 +16,14 @@ const VoucherForm = ({ voucher = null, onClose = () => {} }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const partyResponse = await getParties(endUser._id, token);
+        const partyResponse = await getParties(endUser?._id, token);
         if (partyResponse.success) {
           setPayees(partyResponse.data);
         } else {
           toast.error('Failed to load payees.');
         }
 
-        const accountHeadResponse = await getAllAccountHeadAM(endUser._id, token);
+        const accountHeadResponse = await getAllAccountHeadAM(endUser?._id, token);
         if (accountHeadResponse.success) {
           setAccountHeads(accountHeadResponse.data.accountingHeads);
         } else {
@@ -36,7 +36,7 @@ const VoucherForm = ({ voucher = null, onClose = () => {} }) => {
     };
 
     fetchData();
-  }, [endUser._id, token]);
+  }, [endUser?._id, token]);
 
   const formik = useFormik({
     initialValues: {
@@ -49,7 +49,7 @@ const VoucherForm = ({ voucher = null, onClose = () => {} }) => {
     onSubmit: async (values) => {
       try {
         if (voucher) {
-          const response = await updateVoucher(endUser._id, token, voucher._id, values);
+          const response = await updateVoucher(endUser?._id, token, voucher._id, values);
           if (response.success) {
             toast.success('Voucher updated successfully.');
             onClose();
@@ -57,7 +57,7 @@ const VoucherForm = ({ voucher = null, onClose = () => {} }) => {
             toast.error('Failed to update voucher.');
           }
         } else {
-          const response = await createVoucher(endUser._id, token, values);
+          const response = await createVoucher(endUser?._id, token, values);
           if (response.success) {
             toast.success('Voucher created successfully.');
             formik.resetForm();
@@ -107,7 +107,7 @@ const VoucherForm = ({ voucher = null, onClose = () => {} }) => {
 
   return (
     <div className={`w-screen h-screen ${voucher && 'absolute top-[60px] -left-6'}`}>
-      <Navbar />
+      <Navbar type={typee} />
       <div className={`p-6 ${voucher ? 'bg-white' : 'mt-[90px]'}`}>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold mb-4">{voucher ? 'Edit Voucher' : 'Create Voucher'}</h2>

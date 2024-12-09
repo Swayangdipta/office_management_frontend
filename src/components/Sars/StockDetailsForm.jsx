@@ -3,15 +3,18 @@ import { createStockDetail, getStockTypesSars, updateStockDetail } from './helpe
 import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import { IoCloseCircle } from "react-icons/io5";
+import { getAllAccountHeadAM } from '../am/helper/amApiCalls';
 
 const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, setIsEditing = f => f }) => {
   const [allstockTypes, setAllstockTypes] = useState([]);
+  const [allHeads, setAllHeads] = useState([]);
   const [formData, setFormData] = useState({
     stockType: '',
     registrationId: '',
     purchaseDate: '',
     model: '',
     purchaseValue: '',
+    accountingHead: ''
   });
 
   const { auth, token } = useAuthContext();
@@ -31,7 +34,7 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
 
     if (type === 'add') {
       // Create new asset detail
-      createStockDetail(auth.endUser._id, token, formData).then((data) => {
+      createStockDetail(auth.endUser?._id, token, formData).then((data) => {
         if (!data.success) {
           return toast.error('Failed to add stock. Try again');
         }
@@ -54,7 +57,7 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
       // Update existing asset detail
       console.log(asset);
       
-      updateStockDetail(auth.endUser._id, token, formData, asset._id).then((data) => {
+      updateStockDetail(auth.endUser?._id, token, formData, asset._id).then((data) => {
         console.log(data);
         
         if (!data.success) {
@@ -76,7 +79,7 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
 
   // Fetch asset types
   const getstockTypes = () => {
-    getStockTypesSars(auth.endUser._id, token).then((data) => {
+    getStockTypesSars(auth.endUser?._id, token).then((data) => {
         console.log(data);
         
       if (data.success) {
@@ -90,8 +93,24 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
     });
   };
 
+  const getAccountHeads = () => {
+    getAllAccountHeadAM(auth.endUser?._id, token).then((data) => {
+      console.log(data);
+      
+      if (data.success) {
+        setAllHeads(data.data.accountingHeads);
+      } else {
+        toast.error('Something went wrong while fetching asset types');
+      }
+    }).catch((error) => {
+      console.error(error);
+      toast.error('Error fetching asset types');
+    });
+  };
+
   useEffect(() => {
     getstockTypes();
+    getAccountHeads()
 
     // If in edit mode, pre-fill form with existing asset details
     if (type === 'edit' && asset) {
@@ -192,6 +211,22 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
             required
           />
         </div>
+
+        <select
+            name="accountingHead"
+            value={formData.accountingHead}
+            onChange={handleChange}
+            id="accountingHead"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+          >
+            <option value="">Select Accounting Head</option>
+            {allHeads.length > 0 &&
+              allHeads.map((assetType, index) => (
+                <option key={index} value={assetType._id}>
+                  {assetType.name}
+                </option>
+              ))}
+          </select>
 
         <button
           type="submit"

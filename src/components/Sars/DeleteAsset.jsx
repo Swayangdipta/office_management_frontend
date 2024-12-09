@@ -16,7 +16,7 @@ const DeletionAsset = ({setIsConfirmationOpen = f => f, asset_id, type = 'asset'
       
         // API call to delete employee
         if(type === 'asset'){
-          deleteAssetDetail(endUser._id,token,asset_id).then(data => {
+          deleteAssetDetail(endUser?._id,token,asset_id).then(data => {
             if(data.success){
                 toast.success('Asset deleted successfully.')
                 const element = document.getElementById(asset_id); // Select the element
@@ -32,7 +32,7 @@ const DeletionAsset = ({setIsConfirmationOpen = f => f, asset_id, type = 'asset'
             console.error(error)
         })
         }else{
-          deleteStockDetail(endUser._id,token,asset_id).then(data => {
+          deleteStockDetail(endUser?._id,token,asset_id).then(data => {
             if(data.success){
                 toast.success('Stock deleted successfully.')
                 const element = document.getElementById(asset_id); // Select the element

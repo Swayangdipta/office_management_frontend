@@ -5,7 +5,7 @@ import { getAllVouchers } from './helper/amApiCalls';
 import { useAuthContext } from '../../context/AuthContext';
 import VoucherForm from './Voucher'; // Assuming you have this component for the form
 
-const VouchersList = () => {
+const VouchersList = ({type = 'eu'}) => {
   const [vouchers, setVouchers] = useState([]);
   const [selectedVoucher, setSelectedVoucher] = useState(null); // For modal
   const [theTransactions, setTheTransactions] = useState(null); // For modal
@@ -16,7 +16,7 @@ const VouchersList = () => {
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const response = await getAllVouchers(endUser._id, token);
+        const response = await getAllVouchers(endUser?._id, token);
         if (response.success) {
           setVouchers(response.data);
         }
@@ -162,7 +162,7 @@ const VouchersList = () => {
             Edit Voucher: {selectedVoucher.narration}
           </Modal.Header>
           <Modal.Body>
-            <VoucherForm voucher={selectedVoucher} onClose={closeModal} />
+            <VoucherForm typee='admin' voucher={selectedVoucher} onClose={closeModal} />
           </Modal.Body>
         </Modal>
       )}

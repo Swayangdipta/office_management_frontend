@@ -12,7 +12,7 @@ const VouchersTable = () => {
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const data = await getAllVouchers(endUser._id,token);
+        const data = await getAllVouchers(endUser?._id,token);
         if(data.success){
             setVouchers(data.data);
         }

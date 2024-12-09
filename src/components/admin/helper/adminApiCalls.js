@@ -471,3 +471,167 @@ export const createEndUsers = (id,token,data) => {
         console.error('Error fetching types', error);
       }
 }
+
+// HRM Calls
+export const getEmployeesAdm = (pageNumber, id, token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/employees/${id}`,{
+        pageNumber,
+        limit: 15
+    },{
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        return response.data;
+    }).catch(error => {
+        console.log(error);
+        return {error: error}
+    })
+}
+
+export const addEmployeeAdm = (data,id,token,degnId) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/employee/${id}/${degnId}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
+export const editEmployeeAdm = (data,id,token,emp_id) => {
+    return axios.put(`${env.VITE_BACKEND}/admin/employee/${emp_id}/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
+export const deleteEmployeeAdm = (id,token,emp_id) => {    
+    return axios.delete(`${env.VITE_BACKEND}/admin/employee/${emp_id}/${id}`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
+export const getDesignationsAdm = (id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/designations/${id}`,{},{
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                console.log(error);
+                return {error: error}
+            })
+}
+
+export const generatePayAdm = (data,id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/paybill/gen/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                console.log(error);
+                return {error: error}
+            })
+}
+
+export const getPayDetailsAdm = (data,id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/paybill/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                console.log(error);
+                return {error: error}
+            })
+}
+
+export const getPaySlipAdm = (data,id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/payslip/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                console.log(error);
+                return {error: error}
+            })
+}
+
+export const postPayBillAdm = (data,id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/paybill/post/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                console.log(error);
+                return {error: error}
+            })
+}
+
+export const postRemittancesAdm = (data,id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/remittance/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
+export const getEmployeeAdm = (id,token,emp_id) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/employee/${emp_id}/${id}`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}

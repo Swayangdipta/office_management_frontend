@@ -70,7 +70,7 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = 
       }
 
       const handleEdit = (updatedEmployee) => {
-        editEmployeeHrm(updatedEmployee,endUser._id,token,employee_id).then(data => {
+        editEmployeeHrm(updatedEmployee,endUser?._id,token,employee_id).then(data => {
             console.log(data);
             
             if(data.success){
@@ -114,7 +114,7 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = 
             return
         }
       
-        addEmployeeHrm(updatedEmployee,endUser._id,token,designation).then(data => {
+        addEmployeeHrm(updatedEmployee,endUser?._id,token,designation).then(data => {
             if(data.success){
                 toast.success("Employee Added Successfully")
                 setIsFormOpen(false)
@@ -127,19 +127,21 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = 
       };
 
       const fetchDesignations = () => {
-        getDesignations(endUser._id,token).then(data => {
+        getDesignations(endUser?._id,token).then(data => {
+            console.log(data);
+            
             if(data.error){
                 console.log(data.error);
             }
 
-            setDesignations(data.message)
+            setDesignations(data.data)
         }).catch(error => {
             console.log(error);
         })
       }
 
       const getEmployeeData = () => {
-        getEmployee(endUser._id,token,employee_id).then(employeeData => {
+        getEmployee(endUser?._id,token,employee_id).then(employeeData => {
             console.log();
             
             if(employeeData.success){

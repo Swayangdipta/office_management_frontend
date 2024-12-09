@@ -3,7 +3,7 @@ import axios from "axios"
 const env = import.meta.env
 
 export const getEmployeesHrm = (pageNumber, id, token) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/employees/${id}`,{
+    return axios.post(`${env.VITE_BACKEND}/hrm/employees`,{
         pageNumber,
         limit: 15
     },{
@@ -21,7 +21,7 @@ export const getEmployeesHrm = (pageNumber, id, token) => {
 }
 
 export const addEmployeeHrm = (data,id,token,degnId) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/employee/${id}/${degnId}`, data, {
+    return axios.post(`${env.VITE_BACKEND}/hrm/employee/cr/${degnId}`, data, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export const addEmployeeHrm = (data,id,token,degnId) => {
 }
 
 export const editEmployeeHrm = (data,id,token,emp_id) => {
-    return axios.put(`${env.VITE_BACKEND}/hrm/employee/${emp_id}/${id}`, data, {
+    return axios.put(`${env.VITE_BACKEND}/hrm/employee/${emp_id}`, data, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export const editEmployeeHrm = (data,id,token,emp_id) => {
 }
 
 export const deleteEmployeeHrm = (id,token,emp_id) => {    
-    return axios.delete(`${env.VITE_BACKEND}/hrm/employee/${emp_id}/${id}`, {}, {
+    return axios.delete(`${env.VITE_BACKEND}/hrm/employee/${emp_id}`, {}, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export const deleteEmployeeHrm = (id,token,emp_id) => {
 }
 
 export const getDesignations = (id,token) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/designations/${id}`,{},{
+    return axios.post(`${env.VITE_BACKEND}/hrm/designations`,{},{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export const getDesignations = (id,token) => {
 }
 
 export const generatePay = (data,id,token) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/paybill/gen/${id}`, data, {
+    return axios.post(`${env.VITE_BACKEND}/hrm/paybill/gen`, data, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ export const generatePay = (data,id,token) => {
 }
 
 export const getPayDetails = (data,id,token) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/paybill/${id}`, data, {
+    return axios.post(`${env.VITE_BACKEND}/hrm/paybill`, data, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export const getPayDetails = (data,id,token) => {
 }
 
 export const getPaySlip = (data,id,token) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/payslip/${id}`, data, {
+    return axios.post(`${env.VITE_BACKEND}/hrm/payslip`, data, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ export const getPaySlip = (data,id,token) => {
 }
 
 export const postPayBill = (data,id,token) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/paybill/post/${id}`, data, {
+    return axios.post(`${env.VITE_BACKEND}/hrm/paybill/post`, data, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ export const postPayBill = (data,id,token) => {
 }
 
 export const postRemittances = (data,id,token) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/remittance/${id}`, data, {
+    return axios.post(`${env.VITE_BACKEND}/hrm/remittance`, data, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ export const postRemittances = (data,id,token) => {
 }
 
 export const getEmployee = (id,token,emp_id) => {
-    return axios.post(`${env.VITE_BACKEND}/hrm/employee/${emp_id}/${id}`, {}, {
+    return axios.post(`${env.VITE_BACKEND}/hrm/employee/${emp_id}`, {}, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',

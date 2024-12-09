@@ -36,7 +36,7 @@ const DisbursementForm = () => {
 
     const voucherData = { voucherDate, description, rows, type: "disbursement" };
     try {
-      const response = await createVoucher(endUser._id,token,voucherData);
+      const response = await createVoucher(endUser?._id,token,voucherData);
       toast.success("Voucher created successfully!");
       console.log(response);
     } catch (error) {

@@ -6,12 +6,12 @@ import { useAuthContext } from '../../context/AuthContext'
 import StockDetailsForm from './StockDetailsForm'
 import StockDetailsTable from './StockDetailTable'
 
-const StockDetails = () => {
+const StockDetails = ({type = 'eu'}) => {
     const [assets,setAssets] = useState(null)
     const {auth,token} = useAuthContext()
 
     const getAllAssets = () => {
-        getStocksSars(auth.endUser._id,token).then(data => {
+        getStocksSars(auth.endUser?._id,token).then(data => {
             console.log(data);
             
             if(data.success){
@@ -30,7 +30,7 @@ const StockDetails = () => {
     },[])
   return (
     <>
-        <Navbar />
+        <Navbar type={type} />
 
         <div className='w-screen h-max min-h-screen'>
             <StockDetailsForm assets={assets} setAssets={setAssets} />

@@ -21,6 +21,36 @@ const Navbar = ({type = 'eu'}) => {
             <li>
                 <Link to="/admin/designations" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Designations</Link>
             </li>
+
+            <li>
+                <Link to="/admin/employees" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Employees</Link>
+            </li>
+            <li>
+                <Link to="/admin/remittances" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Remittances</Link>
+            </li>
+            <li>
+                <Link to="/admin/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Reports</Link>
+            </li>
+
+            <li>
+                <Link to="/admin/asset" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Assets</Link>
+            </li>
+            <li>
+                <Link to="/admin/stock" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Stocks</Link>
+            </li>
+            <li>
+                <Link to="/admin/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Reports</Link>
+            </li>
+
+            <li>
+                <Link to="/admin/party" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Party Master</Link>
+            </li>
+            <li>
+                <Link to="/admin/voucher" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Voucher</Link>
+            </li>
+            <li>
+                <Link to="/admin/bank-reconsiliation" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Bank Reconcilition</Link>
+            </li>
         </>
         )
     }

@@ -6,12 +6,12 @@ import toast from 'react-hot-toast'
 import { useAuthContext } from '../../context/AuthContext'
 import AssetDetailsTable from './AssetDetailTable'
 
-const AssetDetails = () => {
+const AssetDetails = ({type = 'eu'}) => {
     const [assets,setAssets] = useState(null)
     const {auth,token} = useAuthContext()
 
     const getAllAssets = () => {
-        getAssetsSars(auth.endUser._id,token).then(data => {
+        getAssetsSars(auth?.endUser?._id,token).then(data => {
             console.log(data);
             
             if(data.success){
@@ -30,7 +30,7 @@ const AssetDetails = () => {
     },[])
   return (
     <>
-        <Navbar />
+        <Navbar type={type} />
 
         <div className='w-screen h-max min-h-screen'>
             <AssetDetailsForm assets={assets} setAssets={setAssets} />

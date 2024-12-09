@@ -3,7 +3,7 @@ import axios from "axios"
 const env = import.meta.env
 
 export const getAssetTypesSars = (id, token) => {
-    return axios.get(`${env.VITE_BACKEND}/sars/asset-type/${id}`,{},{
+    return axios.get(`${env.VITE_BACKEND}/sars/asset-type`,{},{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export const getAssetTypesSars = (id, token) => {
 }
 
 export const createAssetDetail = (id, token, data) => {
-    return axios.post(`${env.VITE_BACKEND}/sars/asset-details/${id}`,data,{
+    return axios.post(`${env.VITE_BACKEND}/sars/asset-details`,data,{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const createAssetDetail = (id, token, data) => {
 }
 
 export const getAssetsSars = (id, token) => {
-    return axios.get(`${env.VITE_BACKEND}/sars/asset-details/${id}`,{},{
+    return axios.get(`${env.VITE_BACKEND}/sars/asset-details`,{},{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export const getAssetsSars = (id, token) => {
 }
 
 export const updateAssetDetail = (id, token, data, assetId) => {
-    return axios.put(`${env.VITE_BACKEND}/sars/asset-details/${assetId}/${id}`,data,{
+    return axios.put(`${env.VITE_BACKEND}/sars/asset-details/${assetId}`,data,{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export const updateAssetDetail = (id, token, data, assetId) => {
 }
 
 export const deleteAssetDetail = (id, token, assetId) => {
-    return axios.delete(`${env.VITE_BACKEND}/sars/asset-details/${assetId}/${id}`,{},{
+    return axios.delete(`${env.VITE_BACKEND}/sars/asset-details/${assetId}`,{},{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export const deleteAssetDetail = (id, token, assetId) => {
 }
 
 export const getStockTypesSars = (id, token) => {
-    return axios.get(`${env.VITE_BACKEND}/sars/stock-type/${id}`,{},{
+    return axios.get(`${env.VITE_BACKEND}/sars/stock-type`,{},{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ export const getStockTypesSars = (id, token) => {
 }
 
 export const createStockDetail = (id, token, data) => {
-    return axios.post(`${env.VITE_BACKEND}/sars/stock-details/${id}`,data,{
+    return axios.post(`${env.VITE_BACKEND}/sars/stock-details`,data,{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export const createStockDetail = (id, token, data) => {
 }
 
 export const getStocksSars = (id, token) => {
-    return axios.get(`${env.VITE_BACKEND}/sars/stock-details/${id}`,{},{
+    return axios.get(`${env.VITE_BACKEND}/sars/stock-details`,{},{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ export const getStocksSars = (id, token) => {
 }
 
 export const updateStockDetail = (id, token, data, assetId) => {
-    return axios.put(`${env.VITE_BACKEND}/sars/stock-details/${assetId}/${id}`,data,{
+    return axios.put(`${env.VITE_BACKEND}/sars/stock-details/${assetId}`,data,{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ export const updateStockDetail = (id, token, data, assetId) => {
 }
 
 export const deleteStockDetail = (id, token, assetId) => {
-    return axios.delete(`${env.VITE_BACKEND}/sars/stock-details/${assetId}/${id}`,{},{
+    return axios.delete(`${env.VITE_BACKEND}/sars/stock-details/${assetId}`,{},{
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ export const deleteStockDetail = (id, token, assetId) => {
 }
 
 export const getAssetCategoriesSars = (id, token) => {
-    return axios.get(`${env.VITE_BACKEND}/sars/reports/asset-categories/${id}`, {}, {
+    return axios.get(`${env.VITE_BACKEND}/sars/reports/asset-categories`, {}, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ export const getAssetCategoriesSars = (id, token) => {
 };
 
 export const getAssetDetailsSars = (id, token) => {
-    return axios.get(`${env.VITE_BACKEND}/sars/reports/asset-details/${id}`, {}, {
+    return axios.get(`${env.VITE_BACKEND}/sars/reports/asset-details`, {}, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ export const getAssetDetailsSars = (id, token) => {
 };
 
 export const getStockDetailsSars = (id, token) => {
-    return axios.get(`${env.VITE_BACKEND}/sars/reports/stock-details/${id}`, {}, {
+    return axios.get(`${env.VITE_BACKEND}/sars/reports/stock-details`, {}, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ export const getStockDetailsSars = (id, token) => {
 };
 
 export const getStockTypeesSars = (id, token) => {
-    return axios.get(`${env.VITE_BACKEND}/sars/reports/stock-types/${id}`, {}, {
+    return axios.get(`${env.VITE_BACKEND}/sars/reports/stock-types`, {}, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',

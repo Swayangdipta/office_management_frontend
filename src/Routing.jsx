@@ -42,6 +42,13 @@ function Routing() {
           <Route path="/admin/designations" element={auth && auth.admin ? <Designations /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
           <Route path="/admin/account-head" element={auth && auth.admin ? <AccountHeadManagement /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
           <Route path="/admin/end-users" element={auth && auth.admin ? <AdminEndUserManagement /> : auth ? <EuDashboard /> : <Auth type='adm' />} />
+          <Route path='/admin/employees' element={auth && auth.admin  ? <Employees type='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/asset' element={auth && auth.admin ? <AssetDetails type='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/stock' element={auth && auth.admin ? <StockDetails type='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/reports' element={auth && auth.admin ? <ReportsPage type='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/party' element={auth && auth.admin ? <PartyMasterPage type='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/voucher' element={auth && auth.admin ? <VoucherForm typee='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/bank-reconsiliation' element={auth && auth.admin ? <BankReconciliation typee='admin' /> : <Navigate to='/' />} />
           <Route path='/employees' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <Employees /> : <Navigate to='/' />} />
           <Route path='/sars/asset' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <AssetDetails /> : <Navigate to='/' />} />
           <Route path='/sars/stock' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <StockDetails /> : <Navigate to='/' />} />
