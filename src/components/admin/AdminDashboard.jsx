@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../base/Navbar'
 import { useAuthContext } from '../../context/AuthContext'
 import Card from '../base/Card'
@@ -6,10 +6,12 @@ import { MdWebAsset, MdInventory, MdBadge } from "react-icons/md";
 import { FaUsers } from 'react-icons/fa';
 import { RiBankLine } from 'react-icons/ri';
 import { BiSolidReport } from 'react-icons/bi';
+import Sidebar from './Sidebar';
 
 const AdminDashboard = () => {
   const {auth} = useAuthContext()
   const {admin, token} = auth
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   const hrm = () => {
     return (
@@ -43,33 +45,39 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className='w-screen min-h-screen h-max'>
+    <div className='w-screen min-h-screen h-max flex gap-8'>
         <Navbar type='admin' />
 
-        <div className='px-4 py-2 mt-[100px] w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>{admin.name.toUpperCase()}</div>
-
-        <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Admin</div>
-        <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
-          <Card title="End Users" Icon={FaUsers} link='/admin/end-users' />
-          <Card title="Assets Category" Icon={MdWebAsset} link='/admin/asset-category' />
-          <Card title="Assets Type" Icon={MdWebAsset} link='/admin/asset-type' />
-          <Card title="Stocks Type" Icon={MdInventory} link='/admin/stock-type' />
-          <Card title="Designations" Icon={MdBadge} link='/admin/designations' />
+        <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+          <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
         </div>
 
-        <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>HR Manager</div>
-        <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
-          {hrm()}
-        </div>
+        <div>
+          <div className='px-4 py-2 mt-[100px] w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>{admin.name.toUpperCase()}</div>
 
-        <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Store Manager</div>
-        <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
-          {sam()}
-        </div>
+          <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Admin</div>
+          <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
+            <Card title="End Users" Icon={FaUsers} link='/admin/end-users' />
+            <Card title="Assets Category" Icon={MdWebAsset} link='/admin/asset-category' />
+            <Card title="Assets Type" Icon={MdWebAsset} link='/admin/asset-type' />
+            <Card title="Stocks Type" Icon={MdInventory} link='/admin/stock-type' />
+            <Card title="Designations" Icon={MdBadge} link='/admin/designations' />
+          </div>
 
-        <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Accounts Manager</div>
-        <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
-          {am()}
+          <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>HR Manager</div>
+          <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
+            {hrm()}
+          </div>
+
+          <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Store Manager</div>
+          <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
+            {sam()}
+          </div>
+
+          <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Accounts Manager</div>
+          <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
+            {am()}
+          </div>
         </div>
     </div>
   )

@@ -17,6 +17,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+li{
+  list-style: none;
+}
+
 body{
   overflow-x: hidden;
 }
@@ -73,4 +77,10 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+#sidebar {
+  overflow-y: scroll; /* Allow scrolling */
+  scrollbar-width: none; /* Hides scrollbar in Firefox */
+  -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
 }
