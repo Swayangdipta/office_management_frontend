@@ -5,10 +5,12 @@ import { getAssetsSars } from './helper/sarsApiCalls'
 import toast from 'react-hot-toast'
 import { useAuthContext } from '../../context/AuthContext'
 import AssetDetailsTable from './AssetDetailTable'
+import Sidebar from '../admin/Sidebar'
 
 const AssetDetails = ({type = 'eu'}) => {
     const [assets,setAssets] = useState(null)
     const {auth,token} = useAuthContext()
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
     const getAllAssets = () => {
         getAssetsSars(auth?.endUser?._id,token).then(data => {
@@ -29,10 +31,18 @@ const AssetDetails = ({type = 'eu'}) => {
         getAllAssets()
     },[])
   return (
-    <>
+    <div className="w-screen h-max flex justify-between gap-12">
         <Navbar type={type} />
 
-        <div className='w-screen h-max min-h-screen'>
+        {
+            type === 'admin' && (
+                <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+                    <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+                </div>
+            )
+        }
+
+        <div className='w-full h-max'>
             <AssetDetailsForm assets={assets} setAssets={setAssets} />
             
             <div className='w-full p-4'>
@@ -43,7 +53,7 @@ const AssetDetails = ({type = 'eu'}) => {
                 }
             </div>
         </div>
-    </>
+    </div>
   )
 }
 

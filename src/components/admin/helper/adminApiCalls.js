@@ -635,3 +635,17 @@ export const getEmployeeAdm = (id,token,emp_id) => {
                 return error
             })
 }
+
+export const getTotals = (id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/totals/${id}`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}

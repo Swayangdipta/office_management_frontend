@@ -13,7 +13,7 @@ const Sidebar = ({setIsOpen = f => f, isOpen}) => {
             onClick={() => setIsOpen(!isOpen)}
             className={`fixed top-[55%] ${
             isOpen ? "left-[183px]" : "left-[-18px]"
-            } transform -translate-y-1/2 p-4 rounded-full duration-700 bg-sky-600 text-[16px] z-[9999] cursor-pointer text-zinc-50`}
+            } transform -translate-y-1/2 p-4 rounded-full duration-700 bg-sky-600 text-[16px] cursor-pointer text-zinc-50`}
         />
 
         <div id='sidebar' className={`${isOpen ? 'w-[200px]' : 'w-[0px]'} h-[100vh] bg-zinc-100 border-r border-sky-500 fixed left-0 top-0 duration-700 overflow-y-scroll overflow-x-hidden`}>

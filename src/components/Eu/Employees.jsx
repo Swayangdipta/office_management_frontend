@@ -6,6 +6,7 @@ import Navbar from '../base/Navbar'
 import DefaultTable from '../base/DefaultTable'
 import toast from 'react-hot-toast'
 import EmployeeManageForm from './EmployeeManageForm'
+import Sidebar from '../admin/Sidebar';
 
 const Employees = ({type = 'eu'}) => {
     const {auth} = useAuthContext()
@@ -17,6 +18,7 @@ const Employees = ({type = 'eu'}) => {
         remittance_type: '',
         remittance_date: ''
     })
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
     const handleRemittances = e => {
         e.preventDefault()
@@ -61,9 +63,18 @@ const Employees = ({type = 'eu'}) => {
         })
     },[])
   return (
-    <div className='w-screen h-max'>
+    <div className='w-screen h-max justify-between flex gap-12'>
         <Navbar type={type} />
 
+        {
+            type === 'admin' && (
+                <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+                    <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+                </div>
+            )
+        }
+
+        <div className='w-full'>
         <div className='w-full flex items-center justify-between mt-[100px] px-4'>
             <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Employee Management</div>
             
@@ -107,6 +118,7 @@ const Employees = ({type = 'eu'}) => {
             </div>
             )
         }
+        </div>
     </div>
   )
 }

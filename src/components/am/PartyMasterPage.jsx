@@ -6,10 +6,12 @@ import { deleteParty, getParties, postParty, updateParty } from "./helper/amApiC
 import { useAuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import Navbar from "../base/Navbar";
+import Sidebar from "../admin/Sidebar";
 
 const PartyMasterPage = ({type = 'eu'}) => {
   const [parties, setParties] = useState([]);
   const [selectedParty, setSelectedParty] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   const {auth} = useAuthContext()
 
@@ -77,10 +79,18 @@ const PartyMasterPage = ({type = 'eu'}) => {
   };
 
   return (
-    <div className="w-screen min-h-screen h-max">
+    <div className="w-screen min-h-screen h-max flex justify-between gap-12">
         <Navbar type={type} />
 
-        <div className="p-6 mt-[100px]">
+        {
+            type === 'admin' && (
+                <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+                    <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+                </div>
+            )
+        }
+
+        <div className="p-6 mt-[100px] w-full">
             <h1 className="text-2xl font-bold mb-4">Party Master</h1>
             <PartyForm party={selectedParty} onSave={handleAddOrUpdate} />
             <PartyTable parties={parties} onEdit={setSelectedParty} onDelete={handleDelete} />

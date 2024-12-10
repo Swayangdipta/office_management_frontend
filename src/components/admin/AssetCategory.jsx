@@ -5,6 +5,7 @@ import { createAssetCategoryAdmin, deleteAssetCategoryAdmin, editAssetCategoryAd
 import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import { IoCloseCircle } from "react-icons/io5";
+import Sidebar from './Sidebar';
 
 const AssetCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -13,6 +14,7 @@ const AssetCategory = () => {
     depreciationRate: ''
   });
   const [isEditOpen,setIsEditOpen] = useState(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   const {auth} = useAuthContext()
 
@@ -116,9 +118,15 @@ const AssetCategory = () => {
   }
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen flex gap-8">
       <Navbar type='admin' />
-      <h2 className="text-2xl font-semibold text-sky-600 mt-[100px] px-4">Asset Categories</h2>
+
+      <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+          <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+      </div>
+
+    <div className='w-full'>
+    <h2 className="text-2xl font-semibold text-sky-600 mt-[100px] px-4">Asset Categories</h2>
       
       {/* Form to create new category */}
       <div className="mt-4 px-4 flex gap-4">
@@ -183,6 +191,7 @@ const AssetCategory = () => {
       {
         isEditOpen && (<EditForm />)
       }
+    </div>
 
     </div>
   );

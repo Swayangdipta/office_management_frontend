@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../base/Navbar'
 import { useAuthContext } from '../../context/AuthContext'
 import Card from '../base/Card'
@@ -7,11 +7,24 @@ import { FaUsers } from 'react-icons/fa';
 import { RiBankLine } from 'react-icons/ri';
 import { BiSolidReport } from 'react-icons/bi';
 import Sidebar from './Sidebar';
+import StatCard from './StatCard';
+import { getTotals } from './helper/adminApiCalls';
+import toast from 'react-hot-toast';
 
 const AdminDashboard = () => {
   const {auth} = useAuthContext()
   const {admin, token} = auth
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [totals, setTotals] = useState({
+    employees: 0,
+    endUsers: 0,
+    assetDetails: 0,
+    stockDetails: 0,
+    vouchers: 0,
+    bankReconciliations: 0,
+  })
+
+  const {employees, endUsers, assetDetails, stockDetails, vouchers, bankReconciliations} = totals
 
   const hrm = () => {
     return (
@@ -44,6 +57,22 @@ const AdminDashboard = () => {
     )
   }
 
+  useEffect(()=>{
+    const fetchTotals = async () => {
+      const response = await getTotals(admin._id,token)
+
+      console.log(response);
+      
+      if(response.error){
+        return toast.error('Faild to load data. Refresh page.')
+      }
+
+      setTotals(response)
+    }
+
+    fetchTotals()
+  },[])
+
   return (
     <div className='w-screen min-h-screen h-max flex gap-8'>
         <Navbar type='admin' />
@@ -52,32 +81,20 @@ const AdminDashboard = () => {
           <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
         </div>
 
-        <div>
+        <div className='w-full px-10'>
           <div className='px-4 py-2 mt-[100px] w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>{admin.name.toUpperCase()}</div>
+            <div className='mt-[40px] flex flex-wrap gap-10'>
+              <StatCard total={endUsers} title='End Users' color='text-emerald-500' />
+              <StatCard total={employees} title='Employees' />
+              <StatCard total={assetDetails} title='Assets' color='text-amber-500' />
+              <StatCard total={stockDetails} title='Stocks' color='text-violet-500' />
+              <StatCard total={vouchers} title="Voucher's" color='text-teal-500' />
+              <StatCard total={bankReconciliations} title="Transaction's" color='text-cyan-500' />
+            </div>
 
-          <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Admin</div>
-          <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
-            <Card title="End Users" Icon={FaUsers} link='/admin/end-users' />
-            <Card title="Assets Category" Icon={MdWebAsset} link='/admin/asset-category' />
-            <Card title="Assets Type" Icon={MdWebAsset} link='/admin/asset-type' />
-            <Card title="Stocks Type" Icon={MdInventory} link='/admin/stock-type' />
-            <Card title="Designations" Icon={MdBadge} link='/admin/designations' />
-          </div>
-
-          <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>HR Manager</div>
-          <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
-            {hrm()}
-          </div>
-
-          <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Store Manager</div>
-          <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
-            {sam()}
-          </div>
-
-          <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Accounts Manager</div>
-          <div className='w-full h-max p-4 flex flex-wrap gap-4 relative top-0'>
-            {am()}
-          </div>
+            <div className='neumorph mt-[70px] w-full h-[300px] mb-[100px] rounded-[50px] flex items-center justify-center'>
+              Currently Under Development. Coming soon....
+            </div>
         </div>
     </div>
   )

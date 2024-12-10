@@ -5,10 +5,12 @@ import toast from 'react-hot-toast'
 import { useAuthContext } from '../../context/AuthContext'
 import StockDetailsForm from './StockDetailsForm'
 import StockDetailsTable from './StockDetailTable'
+import Sidebar from '../admin/Sidebar'
 
 const StockDetails = ({type = 'eu'}) => {
     const [assets,setAssets] = useState(null)
     const {auth,token} = useAuthContext()
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
     const getAllAssets = () => {
         getStocksSars(auth.endUser?._id,token).then(data => {
@@ -29,8 +31,16 @@ const StockDetails = ({type = 'eu'}) => {
         getAllAssets()
     },[])
   return (
-    <>
+    <div className="w-screen h-max flex justify-between gap-12">
         <Navbar type={type} />
+
+        {
+            type === 'admin' && (
+                <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+                    <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+                </div>
+            )
+        }
 
         <div className='w-screen h-max min-h-screen'>
             <StockDetailsForm assets={assets} setAssets={setAssets} />
@@ -43,7 +53,7 @@ const StockDetails = ({type = 'eu'}) => {
                 }
             </div>
         </div>
-    </>
+    </div>
   )
 }
 

@@ -6,6 +6,7 @@ import Navbar from '../base/Navbar';
 import toast from 'react-hot-toast';
 import { createEndUsers, getEndUsers } from './helper/adminApiCalls';
 import { useAuthContext } from '../../context/AuthContext';
+import Sidebar from './Sidebar';
 
 const AdminEndUserManagement = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -13,6 +14,7 @@ const AdminEndUserManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const {auth} = useAuthContext()
   const {admin, token} = auth
+  const [isSidebarOpen,setIsSidebarOpen] = useState(true)
 
   // Fetch End Users
   const fetchUsers = async () => {
@@ -58,8 +60,14 @@ const AdminEndUserManagement = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen h-max">
+    <div className="w-screen min-h-screen h-max flex gap-8">
       <Navbar type='admin' />
+
+      <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+        <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+      </div>
+
+      <div className='w-full'>
       <div className="p-6 mt-[80px]">
         <h2 className="text-xl font-bold mb-4">Admin End-User Management</h2>
 
@@ -175,6 +183,7 @@ const AdminEndUserManagement = () => {
             </form>
           </Modal.Body>
         </Modal>
+      </div>
       </div>
     </div>
   );

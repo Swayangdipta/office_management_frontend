@@ -12,6 +12,7 @@ import {
 import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import Navbar from '../base/Navbar';
+import Sidebar from '../admin/Sidebar';
 
 const BankReconciliation = ({typee = 'eu'}) => {
   const { register, handleSubmit, reset } = useForm();
@@ -19,6 +20,8 @@ const BankReconciliation = ({typee = 'eu'}) => {
   const [filter, setFilter] = useState('all'); // 'all', 'reconciled', 'unreconciled'
   const [showModal, setShowModal] = useState(false);
   const [voucherOptions, setVoucherOptions] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+
   const { auth } = useAuthContext();
   const { endUser, token } = auth;
 
@@ -133,10 +136,18 @@ const BankReconciliation = ({typee = 'eu'}) => {
   });
 
   return (
-    <div className="w-screen min-h-screen h-max">
+    <div className="w-screen min-h-screen h-max flex justify-between gap-12">
       <Navbar type={typee} />
 
-      <div className="p-6 mt-[80px]">
+      {
+            typee === 'admin' && (
+                <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+                    <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+                </div>
+            )
+        }
+
+      <div className="p-6 mt-[80px] w-full">
         <h2 className="text-xl font-bold mb-4">Bank Reconciliation</h2>
 
         {/* Filter Buttons */}

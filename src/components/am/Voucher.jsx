@@ -6,10 +6,13 @@ import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import { MdClose } from 'react-icons/md';
 import VouchersList from './VoucherList';
+import Sidebar from '../admin/Sidebar';
 
 const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
   const [payees, setPayees] = useState([]);
   const [accountHeads, setAccountHeads] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+
   const { auth } = useAuthContext();
   const { endUser, token } = auth;
 
@@ -106,9 +109,18 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
   };
 
   return (
-    <div className={`w-screen h-screen ${voucher && 'absolute top-[60px] -left-6'}`}>
+    <div className={`w-screen h-screen flex justify-between gap-12 ${voucher && 'absolute top-[60px] -left-6'}`}>
       <Navbar type={typee} />
-      <div className={`p-6 ${voucher ? 'bg-white' : 'mt-[90px]'}`}>
+
+      {
+            typee === 'admin' && (
+                <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+                    <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+                </div>
+            )
+        }
+
+      <div className={`p-6 w-full ${voucher ? 'bg-white' : 'mt-[90px]'}`}>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold mb-4">{voucher ? 'Edit Voucher' : 'Create Voucher'}</h2>
           {voucher && (

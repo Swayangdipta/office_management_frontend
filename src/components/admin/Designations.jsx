@@ -4,11 +4,13 @@ import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import { IoCloseCircle } from "react-icons/io5";
 import Navbar from '../base/Navbar';
+import Sidebar from './Sidebar';
 
 const Designations = () => {
   const [designations, setDesignations] = useState([]);
   const [newDesignation, setNewDesignation] = useState({ title: '' });
   const [isEditOpen, setIsEditOpen] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   const { auth } = useAuthContext();
   const { admin, token } = auth;
@@ -90,61 +92,68 @@ const Designations = () => {
   };
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen flex gap-8">
       <Navbar type="admin" />
-      <h2 className="text-2xl font-semibold text-sky-600 mt-[100px] px-4">Designations</h2>
 
-      {/* Form to create new Designation */}
-      <div className="mt-4 px-4 flex gap-4">
-        <input
-          type="text"
-          placeholder="Enter Designation title"
-          value={newDesignation.title}
-          onChange={(e) => setNewDesignation({ title: e.target.value })}
-          className="border p-2 rounded-md"
-        />
-        <button
-          onClick={handleCreateDesignation}
-          className="ml-2 bg-sky-600 text-white p-2 rounded-md"
-        >
-          Create
-        </button>
+      <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+          <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
       </div>
 
-      {/* Table to display Designations */}
-      <div className="px-4">
-        <table className="mt-6 w-full text-left">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">Title</th>
-              <th className="border px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {designations.map(designation => (
-              <tr key={designation._id}>
-                <td className="border px-4 py-2">{designation.title}</td>
-                <td className="border px-4 py-2 flex gap-2">
-                  <button
-                    onClick={() => setIsEditOpen(designation)}
-                    className="bg-amber-600 text-white px-4 py-2 rounded-md"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteDesignation(designation._id)}
-                    className="bg-red-600 text-white px-4 py-2 rounded-md"
-                  >
-                    Delete
-                  </button>
-                </td>
+      <div className='w-full'>
+        <h2 className="text-2xl font-semibold text-sky-600 mt-[100px] px-4">Designations</h2>
+
+        {/* Form to create new Designation */}
+        <div className="mt-4 px-4 flex gap-4">
+          <input
+            type="text"
+            placeholder="Enter Designation title"
+            value={newDesignation.title}
+            onChange={(e) => setNewDesignation({ title: e.target.value })}
+            className="border p-2 rounded-md"
+          />
+          <button
+            onClick={handleCreateDesignation}
+            className="ml-2 bg-sky-600 text-white p-2 rounded-md"
+          >
+            Create
+          </button>
+        </div>
+
+        {/* Table to display Designations */}
+        <div className="px-4">
+          <table className="mt-6 w-full text-left">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Title</th>
+                <th className="border px-4 py-2">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {designations.map(designation => (
+                <tr key={designation._id}>
+                  <td className="border px-4 py-2">{designation.title}</td>
+                  <td className="border px-4 py-2 flex gap-2">
+                    <button
+                      onClick={() => setIsEditOpen(designation)}
+                      className="bg-amber-600 text-white px-4 py-2 rounded-md"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteDesignation(designation._id)}
+                      className="bg-red-600 text-white px-4 py-2 rounded-md"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      {isEditOpen && <EditForm />}
+        {isEditOpen && <EditForm />}
+      </div>
     </div>
   );
 };
