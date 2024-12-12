@@ -20,6 +20,9 @@ import PartyMasterPage from './components/am/PartyMasterPage.jsx'
 import VoucherForm from './components/am/Voucher.jsx'
 import BankReconciliation from './components/am/BankReconciliation.jsx'
 import AdminEndUserManagement from './components/admin/AdminEndUserManagement.jsx'
+import ReportsDashboard from './components/admin/ReportsDashboard.jsx'
+import ReportsAm from './components/am/ReportsAm.jsx'
+import ReportsHrm from './components/Eu/ReportsHrm.jsx'
 function Routing() {
   const {auth,setAuth} = useAuthContext()
 
@@ -45,7 +48,10 @@ function Routing() {
           <Route path='/admin/employees' element={auth && auth.admin  ? <Employees type='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/asset' element={auth && auth.admin ? <AssetDetails type='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/stock' element={auth && auth.admin ? <StockDetails type='admin' /> : <Navigate to='/' />} />
-          <Route path='/admin/reports' element={auth && auth.admin ? <ReportsPage type='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/reports' element={auth && auth.admin ? <ReportsDashboard /> : <Navigate to='/' />} />
+          <Route path='/admin/amreports' element={auth && auth.admin ? <ReportsAm type='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/samreports' element={auth && auth.admin ? <ReportsPage type='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/hrreports' element={auth && auth.admin ? <ReportsHrm type='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/party' element={auth && auth.admin ? <PartyMasterPage type='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/voucher' element={auth && auth.admin ? <VoucherForm typee='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/bank-reconsiliation' element={auth && auth.admin ? <BankReconciliation typee='admin' /> : <Navigate to='/' />} />
@@ -56,6 +62,7 @@ function Routing() {
           <Route path='/am/party' element={auth && auth.endUser && auth.endUser.role === "AM" ? <PartyMasterPage /> : <Navigate to='/' />} />
           <Route path='/am/voucher' element={auth && auth.endUser && auth.endUser.role === "AM" ? <VoucherForm /> : <Navigate to='/' />} />
           <Route path='/am/bank-reconsiliation' element={auth && auth.endUser && auth.endUser.role === "AM" ? <BankReconciliation /> : <Navigate to='/' />} />
+          <Route path='/am/reports' element={auth && auth.endUser && auth.endUser.role === "AM" ? <ReportsAm /> : <Navigate to='/' />} />
         </Routes>
         <Toaster         toastOptions={{
           // Apply z-index via toast options

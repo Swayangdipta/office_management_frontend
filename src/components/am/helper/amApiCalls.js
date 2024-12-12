@@ -266,3 +266,25 @@ export const closeYear = (userId,token) => {
         console.error('Error deleting party', error);
       }
 }
+
+const apiCall = async (url, token, params = {}) => {
+    try {
+      const response = await axios.post(`${env.VITE_BACKEND}${url}`,params, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching data from ${url}:`, error);
+      return { error: true, message: error.message };
+    }
+  };
+
+  // Accounting Module Reports
+  export const getTrialBalanceReport = (token, params) => apiCall('/am/reports/trial-balance', token, params);
+  export const getProfitLossReport = (token, params) => apiCall('/am/reports/profit-loss', token, params);
+  export const getBalanceSheetReport = (token, params) => apiCall('/am/reports/balance-sheet', token, params);
+  export const getLedgersReport = (token, params) => apiCall('/am/reports/ledgers', token, params);

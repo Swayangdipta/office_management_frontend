@@ -164,3 +164,45 @@ export const getEmployee = (id,token,emp_id) => {
                 return error
             })
 }
+
+export const getEmployeeMasterReport = (id, token) => {
+    return axios.post(`${env.VITE_BACKEND}/hrm/reports/employee`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        return response.data;
+    }).catch(error => {
+        return error;
+    });
+};
+
+export const getPayGenerationReport = (id, token) => {
+    return axios.post(`${env.VITE_BACKEND}/hrm/reports/paygeneration`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        return response.data;
+    }).catch(error => {
+        return error;
+    });
+};
+
+export const getRemittancePostingsReport = (id, token) => {
+    return axios.post(`${env.VITE_BACKEND}/hrm/reports/remittances`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        return response.data;
+    }).catch(error => {
+        return error;
+    });
+};

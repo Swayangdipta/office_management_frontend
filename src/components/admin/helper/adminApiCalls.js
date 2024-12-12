@@ -649,3 +649,66 @@ export const getTotals = (id,token) => {
                 return error
             })
 }
+
+export const getFourVouchers = (id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/voucher/summary/${id}`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
+export const getFourTransactions = (id,token) => {
+    return axios.post(`${env.VITE_BACKEND}/admin/transactions/summary/${id}`, {}, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            }
+            }).then(response => {
+                return response.data;
+            }).catch(error => {
+                return error
+            })
+}
+
+const apiCall = async (url, token, params = {}) => {
+    try {
+      const response = await axios.get(`${env.VITE_BACKEND}${url}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        params,
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching data from ${url}:`, error);
+      return { error: true, message: error.message };
+    }
+  };
+  
+  // SARS Module Reports
+  export const getAssetCategoriesReport = (token) => apiCall('/admin/reports/asset-categories', token);
+  export const getAssetDetailsReport = (token) => apiCall('/admin/reports/asset-details', token);
+  export const getStockTypesReport = (token) => apiCall('/admin/reports/stock-types', token);
+  export const getStockDetailsReport = (token) => apiCall('/admin/reports/stock-details', token);
+  
+  // HRM Module Reports
+  export const getEmployeeReport = (empId, token) => apiCall(`/admin/reports/employee/${empId}`, token);
+  export const getPayGenerationReport = (empId, token) => apiCall(`/admin/reports/paygeneration/${empId}`, token);
+//   export const getPayBillPostingReport = (empId, token) => apiCall(`/admin/reports/paybill/${empId}`, token);
+  export const getRemittancesPostingReport = (empId, token) => apiCall(`/admin/reports/remittances/${empId}`, token);
+  
+  // Accounting Module Reports
+  export const getTrialBalanceReport = (token, params) => apiCall('/admin/reports/trial-balance', token, params);
+  export const getProfitLossReport = (token, params) => apiCall('/admin/reports/profit-loss', token, params);
+  export const getBalanceSheetReport = (token, params) => apiCall('/admin/reports/balance-sheet', token, params);
+  export const getLedgersReport = (token, params) => apiCall('/admin/reports/ledgers', token, params);

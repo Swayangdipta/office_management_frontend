@@ -4,6 +4,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import toast from 'react-hot-toast';
 import * as XLSX from "xlsx"; // Import xlsx library
 import Navbar from "../base/Navbar";
+import Sidebar from "../admin/Sidebar";
 
 const ReportsPage = ({type = 'eu'}) => {
   const [activeTab, setActiveTab] = useState("assetCategories");
@@ -11,6 +12,7 @@ const ReportsPage = ({type = 'eu'}) => {
   const [assetDetails, setAssetDetails] = useState([]);
   const [stockTypes, setStockTypes] = useState([]);
   const [stockDetails, setStockDetails] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   const { auth } = useAuthContext();
   const { token } = auth;
@@ -61,6 +63,7 @@ const ReportsPage = ({type = 'eu'}) => {
     // Fetch Stock Details
     getStockDetailsSars(auth.endUser?._id, token)
       .then((res) => {
+        
         if (res.success) {
           setStockDetails(res.data);
         } else {
@@ -223,81 +226,92 @@ const ReportsPage = ({type = 'eu'}) => {
   );
 
   return (
-    <div className="mx-auto p-6 w-screen relative top-0 left-0 min-h-screen h-max">
+    <div className="mx-auto p-6 w-full relative top-0 left-0 min-h-screen h-max flex justify-between gap-8">
         <Navbar type={type} />
-      <h2 className="text-2xl font-semibold mb-6 mt-[80px]">Reports</h2>
-      <div className="mb-4 w-screen">
-        <button
-          onClick={() => setActiveTab("assetCategories")}
-          className={`px-4 py-2 ${activeTab === "assetCategories" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-        >
-          Asset Categories
-        </button>
-        <button
-          onClick={() => setActiveTab("assetDetails")}
-          className={`px-4 py-2 mx-2 ${activeTab === "assetDetails" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-        >
-          Asset Details
-        </button>
-        <button
-          onClick={() => setActiveTab("stockTypes")}
-          className={`px-4 py-2 mx-2 ${activeTab === "stockTypes" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-        >
-          Stock Types
-        </button>
-        <button
-          onClick={() => setActiveTab("stockDetails")}
-          className={`px-4 py-2 mx-2 ${activeTab === "stockDetails" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-        >
-          Stock Details
-        </button>
-      </div>
 
-      <div>
-        {activeTab === "assetCategories" && (
-          <>
-            <button
-              onClick={() => exportToExcel(assetCategories, "Asset_Categories")}
-              className="bg-green-500 text-white py-2 px-4 mb-4 rounded"
-            >
-              Export to Excel
-            </button>
-            {renderAssetCategoriesTable()}
-          </>
-        )}
-        {activeTab === "assetDetails" && (
-          <>
-            <button
-              onClick={() => exportToExcel(assetDetails, "Asset_Details")}
-              className="bg-green-500 text-white py-2 px-4 mb-4"
-            >
-              Export to Excel
-            </button>
-            {renderAssetDetailsTable()}
-          </>
-        )}
-        {activeTab === "stockTypes" && (
-          <>
-            <button
-              onClick={() => exportToExcel(stockTypes, "Stock_Types")}
-              className="bg-green-500 text-white py-2 px-4 mb-4"
-            >
-              Export to Excel
-            </button>
-            {renderStockTypesTable()}
-          </>
-        )}
-        {activeTab === "stockDetails" && (
-          <>
-            <button
-              onClick={() => exportToExcel(stockDetails, "Stock_Details")}
-              className="bg-green-500 text-white py-2 px-4 mb-4"
-            >
-              Export to Excel
-            </button>
-            {renderStockDetailsTable()}
-          </>
-        )}
+        {
+            type === 'admin' && (
+                <div className={`${isSidebarOpen ? 'w-[200px]' : 'w-[0px]'} h-screen duration-700`}>
+                    <Sidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
+                </div>
+            )
+        }
+
+      <div className={`w-full ${type === 'admin' && 'p-6'}`}>
+        <h2 className="text-2xl font-semibold mb-6 mt-[80px]">Reports</h2>
+        <div className="mb-4 w-screen">
+          <button
+            onClick={() => setActiveTab("assetCategories")}
+            className={`px-4 py-2 ${activeTab === "assetCategories" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          >
+            Asset Categories
+          </button>
+          <button
+            onClick={() => setActiveTab("assetDetails")}
+            className={`px-4 py-2 mx-2 ${activeTab === "assetDetails" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          >
+            Asset Details
+          </button>
+          <button
+            onClick={() => setActiveTab("stockTypes")}
+            className={`px-4 py-2 mx-2 ${activeTab === "stockTypes" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          >
+            Stock Types
+          </button>
+          <button
+            onClick={() => setActiveTab("stockDetails")}
+            className={`px-4 py-2 mx-2 ${activeTab === "stockDetails" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          >
+            Stock Details
+          </button>
+        </div>
+
+        <div>
+          {activeTab === "assetCategories" && (
+            <>
+              <button
+                onClick={() => exportToExcel(assetCategories, "Asset_Categories")}
+                className="bg-green-500 text-white py-2 px-4 mb-4 rounded"
+              >
+                Export to Excel
+              </button>
+              {renderAssetCategoriesTable()}
+            </>
+          )}
+          {activeTab === "assetDetails" && (
+            <>
+              <button
+                onClick={() => exportToExcel(assetDetails, "Asset_Details")}
+                className="bg-green-500 text-white py-2 px-4 mb-4"
+              >
+                Export to Excel
+              </button>
+              {renderAssetDetailsTable()}
+            </>
+          )}
+          {activeTab === "stockTypes" && (
+            <>
+              <button
+                onClick={() => exportToExcel(stockTypes, "Stock_Types")}
+                className="bg-green-500 text-white py-2 px-4 mb-4"
+              >
+                Export to Excel
+              </button>
+              {renderStockTypesTable()}
+            </>
+          )}
+          {activeTab === "stockDetails" && (
+            <>
+              <button
+                onClick={() => exportToExcel(stockDetails, "Stock_Details")}
+                className="bg-green-500 text-white py-2 px-4 mb-4"
+              >
+                Export to Excel
+              </button>
+              {renderStockDetailsTable()}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
