@@ -55,6 +55,8 @@ const ReportsAm = ({ type = 'eu' }) => {
 
     getLedgersReport(token, { startDate: formattedStartDate, endDate: formattedEndDate })
       .then((res) => {
+        console.log(res);
+        
         if (res.success) {
           setLedgers(res.data);
         } else {
@@ -123,9 +125,9 @@ const ReportsAm = ({ type = 'eu' }) => {
         </thead>
         <tbody>
           <tr className="hover:bg-gray-100">
-            <td className="p-3 border-b border-gray-200">{profitLoss.revenue}</td>
-            <td className="p-3 border-b border-gray-200">{profitLoss.expenses}</td>
-            <td className="p-3 border-b border-gray-200">{profitLoss.profitOrLoss}</td>
+            <td className="p-3 border-b border-gray-200 text-emerald-500">+{profitLoss.revenue.toFixed(2)}</td>
+            <td className="p-3 border-b border-gray-200 text-rose-500">-{profitLoss.expenses.toFixed(2)}</td>
+            <td className={`p-3 border-b border-gray-200 font-semibold ${profitLoss.profitOrLoss > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>{profitLoss.profitOrLoss > 0 && '+'}{profitLoss.profitOrLoss.toFixed(2)}</td>
           </tr>
         </tbody>
       </table>
@@ -161,7 +163,15 @@ const ReportsAm = ({ type = 'eu' }) => {
   const renderLedgers = () => (
     <div className="overflow-x-auto">
       <div className="mb-4">
-        <button onClick={() => exportToExcel(Object.entries(ledgers).flatMap(([type, entries]) => entries), "LedgersReport")} className="bg-green-500 text-white px-4 py-2 rounded">
+        <button
+          onClick={() =>
+            exportToExcel(
+              Object.entries(ledgers).flatMap(([type, entries]) => entries.map((entry) => ({ ...entry, type }))),
+              "LedgersReport"
+            )
+          }
+          className="bg-green-500 text-white px-4 py-2 rounded"
+        >
           Export to Excel
         </button>
       </div>
@@ -175,26 +185,31 @@ const ReportsAm = ({ type = 'eu' }) => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(ledgers).every(key => ledgers[key].length === 0) ? (
+          {Object.values(ledgers).every((entries) => entries.length === 0) ? (
             <tr>
-              <td colSpan={4} className="text-center p-4">No data available.</td>
+              <td colSpan={4} className="text-center p-4">
+                No data available.
+              </td>
             </tr>
           ) : (
-            Object.entries(ledgers).flatMap(([ledgerType, entries]) => (
+            Object.entries(ledgers).flatMap(([type, entries]) =>
               entries.map((entry, index) => (
-                <tr key={`${ledgerType}-${index}`} className="hover:bg-gray-100">
-                  <td className="p-3 border-b border-gray-200">{new Date(entry.date).toLocaleDateString()}</td>
-                  <td className="p-3 border-b border-gray-200 capitalize">{ledgerType}</td>
+                <tr key={`${type}-${index}`} className="hover:bg-gray-100">
+                  <td className="p-3 border-b border-gray-200">
+                    {new Date(entry.date).toLocaleDateString()}
+                  </td>
+                  <td className="p-3 border-b border-gray-200 capitalize">{type}</td>
                   <td className="p-3 border-b border-gray-200">{entry.amount.toFixed(2)}</td>
                   <td className="p-3 border-b border-gray-200">{entry.description}</td>
                 </tr>
               ))
-            ))
+            )
           )}
         </tbody>
       </table>
     </div>
   );
+  
 
   return (
     <div className="mx-auto p-6 w-full relative top-0 min-h-screen h-max flex justify-between gap-8">
