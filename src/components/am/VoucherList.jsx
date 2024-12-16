@@ -4,11 +4,14 @@ import { Table, Button, Modal } from 'flowbite-react';
 import { getAllVouchers } from './helper/amApiCalls';
 import { useAuthContext } from '../../context/AuthContext';
 import VoucherForm from './Voucher'; // Assuming you have this component for the form
+import VoucherFormat from './VoucherFormat';
+import { MdClose } from 'react-icons/md';
 
 const VouchersList = ({type = 'eu'}) => {
   const [vouchers, setVouchers] = useState([]);
   const [selectedVoucher, setSelectedVoucher] = useState(null); // For modal
   const [theTransactions, setTheTransactions] = useState(null); // For modal
+  const [forPrint, setForPrint] = useState(null); // For modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { auth } = useAuthContext();
   const { endUser, token } = auth;
@@ -59,6 +62,11 @@ const VouchersList = ({type = 'eu'}) => {
     setIsModalOpen(true);
   };
 
+  const handleDownload = (voucher) => {
+
+  };
+  
+
   return (
     <div className="p-6">
       <h2 className="text-xl font-bold mb-4">All Vouchers</h2>
@@ -101,14 +109,14 @@ const VouchersList = ({type = 'eu'}) => {
                     >
                       Edit
                     </Button>
-                    {/* <Button
+                    <Button
                       size="xs"
                       color="red"
                       className='bg-rose-600 text-zinc-50'
-                      onClick={() => handleDelete(voucher._id)}
+                      onClick={() => setForPrint(voucher)}
                     >
-                      Delete
-                    </Button> */}
+                      View & Download
+                    </Button>
                   </div>
                 </Table.Cell>
               </Table.Row>
@@ -166,6 +174,14 @@ const VouchersList = ({type = 'eu'}) => {
           </Modal.Body>
         </Modal>
       )}
+      {
+        forPrint && (
+          <div className='w-screen h-max flex items-center justify-center bg-[#00000080] fixed top-0 left-0 z-[99999999] p-4'>
+            <p onClick={e=>setForPrint(null)} className='w-[40px] h-[40px] absolute top-[30px] left-[200px] flex items-center justify-center text-white bg-rose-500 rounded-full text-[20px] cursor-pointer'><MdClose /></p>
+            <VoucherFormat voucher={forPrint} />
+          </div>
+        )
+      }
     </div>
   );
 };

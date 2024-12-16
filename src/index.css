@@ -90,3 +90,9 @@ button:focus-visible {
   box-shadow:  20px 20px 60px #d9d9d9,
              -20px -20px 60px #ffffff;
 }
+
+@media print {
+  @page {
+    size: 8.27in 11.67in;
+  }
+}

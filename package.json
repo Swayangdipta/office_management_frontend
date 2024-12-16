@@ -23,6 +23,7 @@
     "react-router-dom": "^7.0.1",
     "react-select": "^5.8.3",
     "react-to-pdf": "^1.0.1",
+    "react-to-print": "^3.0.2",
     "simple-datatables": "^9.2.1",
     "xlsx": "^0.18.5"
   },
