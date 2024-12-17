@@ -18,7 +18,7 @@ const Sidebar = ({setIsOpen = f => f, isOpen}) => {
 
         <div id='sidebar' className={`${isOpen ? 'w-[200px]' : 'w-[0px]'} h-[100vh] bg-zinc-100 border-r border-sky-500 fixed left-0 top-0 duration-700 overflow-y-scroll overflow-x-hidden`}>
         
-        <div className={`mt-[100px] px-[20px] pb-8 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`mt-[140px] px-[20px] pb-8 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
             <h1 className='text-[18px]'>Admin Only</h1>
             <ul className=' mt-[10px]'>
                 <li>

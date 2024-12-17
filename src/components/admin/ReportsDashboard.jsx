@@ -19,7 +19,7 @@ const ReportsDashboard = ({ type = 'admin' }) => {
       </div>
 
       <div className='w-full'>
-        <h2 className="text-2xl font-semibold mb-6 mt-[80px]">All Reports</h2>
+        <h2 className="text-2xl font-semibold mb-6 mt-[130px]">All Reports</h2>
 
         <div className='mt-[40px] flex flex-wrap gap-10'>
           <Link to='/admin/amreports' className='neumorph w-[150px] h-[150px] rounded-[50px] flex flex-col items-center justify-center hover:shadow-none duration-300' >Accounts Reports</Link>

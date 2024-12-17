@@ -238,7 +238,7 @@ const ReportsPage = ({type = 'eu'}) => {
         }
 
       <div className={`w-full ${type === 'admin' && 'p-6'}`}>
-        <h2 className="text-2xl font-semibold mb-6 mt-[80px]">Reports</h2>
+        <h2 className="text-2xl font-semibold mb-6 mt-[130px]">Reports</h2>
         <div className="mb-4 w-screen">
           <button
             onClick={() => setActiveTab("assetCategories")}

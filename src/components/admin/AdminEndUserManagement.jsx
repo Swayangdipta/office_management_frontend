@@ -68,7 +68,7 @@ const AdminEndUserManagement = () => {
       </div>
 
       <div className='w-full'>
-      <div className="p-6 mt-[80px]">
+      <div className="p-6 mt-[140px]">
         <h2 className="text-xl font-bold mb-4">Admin End-User Management</h2>
 
         {/* Add User Button */}

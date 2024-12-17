@@ -45,7 +45,7 @@ const EuDashboard = () => {
   return (
     <div className='w-screen min-h-screen h-max'>
       <Navbar />
-      <div className='px-4 py-2 mt-[100px] w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>{endUser.name.toUpperCase()}</div>
+      <div className='px-4 py-2 mt-[150px] w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>{endUser.name.toUpperCase()}</div>
 
       <div className='w-full h-max p-4 flex flex-wrap gap-4'>
         {

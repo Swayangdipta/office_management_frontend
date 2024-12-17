@@ -116,7 +116,7 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
   };
 
   return (
-    <div className="p-5 mt-[80px] bg-slate-200 border-b border-sky-500 relative">
+    <div className="p-5 mt-[130px] bg-slate-200 border-b border-sky-500 relative">
       <h2 className="text-2xl font-semibold text-sky-600">
         {type === 'add' ? 'Add Accounting Head' : 'Edit Accounting Head'}
       </h2>

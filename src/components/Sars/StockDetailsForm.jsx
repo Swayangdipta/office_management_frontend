@@ -125,7 +125,7 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
   }, [type, asset]);
 
   return (
-    <div className="p-5 mt-[80px] bg-slate-200 border-b border-sky-500 relative top-0">
+    <div className="p-5 mt-[130px] bg-slate-200 border-b border-sky-500 relative top-0">
         {type !== 'add' && (
             <IoCloseCircle onClick={e => setIsEditing(null)} className='text-rose-600 cursor-pointer absolute right-[-10px] top-[-10px] text-[44px]' />
         )}

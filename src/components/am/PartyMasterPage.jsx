@@ -90,7 +90,7 @@ const PartyMasterPage = ({type = 'eu'}) => {
             )
         }
 
-        <div className="p-6 mt-[100px] w-full">
+        <div className="p-6 mt-[150px] w-full">
             <h1 className="text-2xl font-bold mb-4">Party Master</h1>
             <PartyForm party={selectedParty} onSave={handleAddOrUpdate} />
             <PartyTable parties={parties} onEdit={setSelectedParty} onDelete={handleDelete} />

@@ -98,7 +98,7 @@ const AdminDashboard = () => {
         </div>
 
         <div className='w-full px-10'>
-          <div className='px-4 py-2 mt-[100px] w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>{admin.name.toUpperCase()}</div>
+          <div className='px-4 py-2 mt-[150px] w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>{admin.name.toUpperCase()}</div>
             <div className='mt-[40px] flex flex-wrap gap-10'>
               <StatCard total={endUsers} title='End Users' color='text-emerald-500' />
               <StatCard total={employees} title='Employees' />

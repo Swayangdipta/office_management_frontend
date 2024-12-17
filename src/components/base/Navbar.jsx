@@ -10,21 +10,23 @@ import { BiCategory } from 'react-icons/bi'
 const Navbar = ({type = 'eu'}) => {
     const {auth,setAuth} = useAuthContext()
 
+    const currentYear = new Date().getFullYear()
+
     const adm = () => {
         return (
         <>
             <li>
-                <Link to="/admin" class="flex flex-col gap-1 items-center justify-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white relative top-0 group">
+                <Link to="/admin" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
                     <MdDashboard />
                     Dashboard
                 </Link>
             </li>
             <li>
-                <Link to="/admin" class="flex flex-col gap-1 items-center justify-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white relative top-0 group">
+                <Link to="/admin" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
                     <RiAdminLine />
                     Admin Only
 
-                    <div className='hidden group-hover:block duration-500 rounded p-2 absolute top-[50px] w-max bg-slate-200 h-max'>
+                    <div className='hidden group-hover:block duration-500 rounded p-2 absolute top-[20px] w-max bg-slate-200 h-max'>
                         <li>
                             <Link to="/admin/end-users" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 <FaUsers />
@@ -68,11 +70,11 @@ const Navbar = ({type = 'eu'}) => {
                 </Link>
             </li>
             <li>
-                <Link to="/admin" class="flex flex-col gap-1 items-center justify-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white relative top-0 group">
+                <Link to="/admin" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
                     <FaStore />
                     Store
 
-                    <div className='hidden group-hover:block duration-500 rounded p-2 absolute top-[50px] w-max bg-slate-200 h-max'>
+                    <div className='hidden group-hover:block duration-500 rounded p-2 absolute top-[20px] w-max bg-slate-200 h-max'>
                         <li>
                             <Link to="/admin/asset" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 <FaBoxOpen />
@@ -90,11 +92,11 @@ const Navbar = ({type = 'eu'}) => {
             </li>
 
             <li>
-                <Link to="/admin" class="flex flex-col gap-1 items-center justify-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white relative top-0 group">
+                <Link to="/admin" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
                     <RiTeamLine />
                     HR
 
-                    <div className='hidden group-hover:block duration-500 rounded p-2 absolute top-[50px] w-max bg-slate-200 h-max'>
+                    <div className='hidden group-hover:block duration-500 rounded p-2 absolute top-[20px] w-max bg-slate-200 h-max'>
                         <li>
                             <Link to="/admin/employees" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 <FaUsers />
@@ -106,11 +108,11 @@ const Navbar = ({type = 'eu'}) => {
             </li>
 
             <li>
-                <Link to="/admin/accounts" class="flex flex-col gap-1 items-center justify-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white relative top-0 group">
+                <Link to="/admin/accounts" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
                     <FaRegCreditCard />
                     Accounts
 
-                    <div className='hidden group-hover:block duration-500 rounded p-2 absolute top-[50px] w-max bg-slate-200 h-max'>
+                    <div className='hidden group-hover:block duration-500 rounded p-2 absolute top-[20px] w-max bg-slate-200 h-max'>
                         <li>
                             <Link to="/admin/party" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 <MdOutlineBusiness />
@@ -134,7 +136,7 @@ const Navbar = ({type = 'eu'}) => {
             </li>
 
             <li>
-                <Link to="/admin/reports" class="flex flex-col gap-1 items-center justify-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white relative top-0 group">
+                <Link to="/admin/reports" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
                     <FaRegChartBar />
                     Reports
                 </Link>
@@ -248,13 +250,13 @@ const Navbar = ({type = 'eu'}) => {
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Company</span>
             </Link>
 
-            <div className='h-full flex flex-wrap items-center justify-center gap-2'>
+            {/* <div className='h-full flex flex-wrap items-center justify-center gap-2'>
                 {
                     adm()
                 }
-            </div>
+            </div> */}
 
-            <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            {/* <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <button type="button" class="flex text-sm  rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
                     <img class="w-8 h-8 rounded-full" src={auth.admin.picture} alt="user photo" />
@@ -284,7 +286,20 @@ const Navbar = ({type = 'eu'}) => {
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
                     </svg>
                 </button>
+            </div> */}
+
+            <div className='flex flex-col'>
+                <h4 className='text-emerald-600 text-[10px]'><b>Welcome</b> {auth.admin.name}</h4>
+                <h4 className='text-emerald-600 text-[10px]'><b>Fiscal Year:  {currentYear} - {currentYear + 1}</b></h4>
+                <h4 className='text-emerald-600 text-[10px] mt-2'><b>c-OMPANY Client support (DPA)</b></h4>
+                <h4 className='text-emerald-600 text-[10px]'><b>Tele:  91 0253</b></h4>
             </div>
+        </div>
+
+        <div className='w-full bg-emerald-600 h-max flex items-center gap-2 text-zinc-50 py-1'>
+                {
+                    adm()
+                }
         </div>
         </nav>
     )

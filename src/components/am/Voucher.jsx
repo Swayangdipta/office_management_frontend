@@ -120,7 +120,7 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
             )
         }
 
-      <div className={`p-6 w-full ${voucher ? 'bg-white' : 'mt-[90px]'}`}>
+      <div className={`p-6 w-full ${voucher ? 'bg-white' : 'mt-[140px]'}`}>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold mb-4">{voucher ? 'Edit Voucher' : 'Create Voucher'}</h2>
           {voucher && (

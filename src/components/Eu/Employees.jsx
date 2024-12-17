@@ -75,7 +75,7 @@ const Employees = ({type = 'eu'}) => {
         }
 
         <div className='w-full'>
-        <div className='w-full flex items-center justify-between mt-[100px] px-4'>
+        <div className='w-full flex items-center justify-between mt-[150px] px-4'>
             <div className='px-4 py-2 w-max bg-zinc-900 rounded m-4 text-[12px] text-zinc-100 font-bold'>Employee Management</div>
             
             <div>

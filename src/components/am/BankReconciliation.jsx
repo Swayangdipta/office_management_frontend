@@ -147,7 +147,7 @@ const BankReconciliation = ({typee = 'eu'}) => {
             )
         }
 
-      <div className="p-6 mt-[80px] w-full">
+      <div className="p-6 mt-[130px] w-full">
         <h2 className="text-xl font-bold mb-4">Bank Reconciliation</h2>
 
         {/* Filter Buttons */}

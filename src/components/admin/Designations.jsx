@@ -100,7 +100,7 @@ const Designations = () => {
       </div>
 
       <div className='w-full'>
-        <h2 className="text-2xl font-semibold text-sky-600 mt-[100px] px-4">Designations</h2>
+        <h2 className="text-2xl font-semibold text-sky-600 mt-[150px] px-4">Designations</h2>
 
         {/* Form to create new Designation */}
         <div className="mt-4 px-4 flex gap-4">

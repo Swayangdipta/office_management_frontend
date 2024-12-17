@@ -127,7 +127,7 @@ const VouchersList = ({type = 'eu'}) => {
 
       {/* Modal for Viewing Transactions */}
       {theTransactions && (
-        <Modal show={isModalOpen} onClose={closeTransactions} className='mt-[80px]'>
+        <Modal show={isModalOpen} onClose={closeTransactions} className='mt-[130px]'>
           <Modal.Header>
             Transactions for Voucher: {theTransactions.narration}
           </Modal.Header>

@@ -112,7 +112,7 @@ const AssetType = () => {
       </div>
 
       <div className='w-full'>
-      <h2 className="text-2xl font-semibold text-sky-600 mt-[100px] px-4">Asset Types</h2>
+      <h2 className="text-2xl font-semibold text-sky-600 mt-[150px] px-4">Asset Types</h2>
       
       <div className="mt-4 px-4 flex gap-4">
         <input
