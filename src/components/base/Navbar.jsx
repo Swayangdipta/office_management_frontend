@@ -129,6 +129,13 @@ const Navbar = ({type = 'eu'}) => {
                                 Bank Reconciliation
                             </Link>
                         </li>
+
+                        <li>
+                            <Link to="/admin/bank-statement" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <MdAccountBalance />
+                                Bank Statement
+                            </Link>
+                        </li>
                     </div>
                 </Link>
             </li>
@@ -229,6 +236,10 @@ const Navbar = ({type = 'eu'}) => {
                 {
                     auth.endUser.role === 'HRM' ? hrm() : auth.endUser.role === 'SAM' ? sam() : auth.endUser.role === 'AM' ? am() : 'Not a valid role'
                 }
+
+            <li>
+                <Link class="block px-4 py-2 text-sm text-zinc-50" onClick={signout}>Logout</Link>
+            </li>
         </div>
         </nav>
     ) : (

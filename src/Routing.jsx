@@ -26,6 +26,7 @@ import ReportsHrm from './components/Eu/ReportsHrm.jsx'
 import PayGenerations from './components/Eu/PayGenerations.jsx'
 import Remittances from './components/Eu/Remittances.jsx'
 import PayBillPosting from './components/Eu/PayBill.jsx'
+import BankStatement from './components/am/BankStatement.jsx'
 function Routing() {
   const {auth,setAuth} = useAuthContext()
 
@@ -58,6 +59,7 @@ function Routing() {
           <Route path='/admin/party' element={auth && auth.admin ? <PartyMasterPage type='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/voucher' element={auth && auth.admin ? <VoucherForm typee='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/bank-reconsiliation' element={auth && auth.admin ? <BankReconciliation typee='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/bank-statement' element={auth && auth.admin ? <BankStatement type='admin' /> : <Navigate to='/' />} />
           <Route path='/employees' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <Employees /> : <Navigate to='/' />} />
           <Route path='/pay-finalization' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <PayGenerations /> : <Navigate to='/' />} />
           <Route path='/paybill' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <PayBillPosting /> : <Navigate to='/' />} />
@@ -68,6 +70,7 @@ function Routing() {
           <Route path='/am/party' element={auth && auth.endUser && auth.endUser.role === "AM" ? <PartyMasterPage /> : <Navigate to='/' />} />
           <Route path='/am/voucher' element={auth && auth.endUser && auth.endUser.role === "AM" ? <VoucherForm /> : <Navigate to='/' />} />
           <Route path='/am/bank-reconsiliation' element={auth && auth.endUser && auth.endUser.role === "AM" ? <BankReconciliation /> : <Navigate to='/' />} />
+          <Route path='/am/bank-statement' element={auth && auth.endUser && auth.endUser.role === "AM" ? <BankStatement /> : <Navigate to='/' />} />
           <Route path='/am/reports' element={auth && auth.endUser && auth.endUser.role === "AM" ? <ReportsAm /> : <Navigate to='/' />} />
         </Routes>
         <Toaster         toastOptions={{
