@@ -23,6 +23,9 @@ import AdminEndUserManagement from './components/admin/AdminEndUserManagement.js
 import ReportsDashboard from './components/admin/ReportsDashboard.jsx'
 import ReportsAm from './components/am/ReportsAm.jsx'
 import ReportsHrm from './components/Eu/ReportsHrm.jsx'
+import PayGenerations from './components/Eu/PayGenerations.jsx'
+import Remittances from './components/Eu/Remittances.jsx'
+import PayBillPosting from './components/Eu/PayBill.jsx'
 function Routing() {
   const {auth,setAuth} = useAuthContext()
 
@@ -56,6 +59,9 @@ function Routing() {
           <Route path='/admin/voucher' element={auth && auth.admin ? <VoucherForm typee='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/bank-reconsiliation' element={auth && auth.admin ? <BankReconciliation typee='admin' /> : <Navigate to='/' />} />
           <Route path='/employees' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <Employees /> : <Navigate to='/' />} />
+          <Route path='/pay-finalization' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <PayGenerations /> : <Navigate to='/' />} />
+          <Route path='/paybill' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <PayBillPosting /> : <Navigate to='/' />} />
+          <Route path='/remittance' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <Remittances /> : <Navigate to='/' />} />
           <Route path='/sars/asset' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <AssetDetails /> : <Navigate to='/' />} />
           <Route path='/sars/stock' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <StockDetails /> : <Navigate to='/' />} />
           <Route path='/sars/reports' element={auth && auth.endUser && auth.endUser.role === "SAM" ? <ReportsPage /> : <Navigate to='/' />} />

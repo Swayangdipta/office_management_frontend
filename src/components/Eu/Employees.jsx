@@ -86,7 +86,7 @@ const Employees = ({type = 'eu'}) => {
 
         <div className='w-full p-4 '>
             {
-                employees.length > 0 && <DefaultTable data={employees} />
+                employees.length > 0 && <DefaultTable type={type} datas={employees} />
             }
         </div>
         {

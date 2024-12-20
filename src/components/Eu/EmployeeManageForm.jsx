@@ -32,10 +32,11 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = 
         tds: 0,
         pf: 0,
         gis: 0,
+        other_deductions: 0,
         tempQualifications: ""
     })
 
-    const {basic_pay,allowances,tds,pf,gis,tempQualifications} = miscellenous
+    const {basic_pay,allowances,tds,pf,gis,other_deductions,tempQualifications} = miscellenous
       
     // Destructure employee state
     const {
@@ -62,7 +63,7 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = 
 
       
       const handleChange = (e,field) => {
-        if(field == "tempQualifications" || field == "basic_pay" || field == "allowances" || field == "tds" || field == "pf" || field == "gis"){            
+        if(field == "tempQualifications" || field == "basic_pay" || field == "allowances" || field == "tds" || field == "pf" || field == "gis" || field == "other_deductions"){            
             setMiscellenous({...miscellenous, [field]: e.target.value})
         }else{
             setEmployee({ ...employee, [field]: e.target.value})
@@ -97,6 +98,7 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = 
           tds: tds,
           pf: pf,
           gis: gis,
+          other_deductions: other_deductions
         };
       
         const updatedEmployee = {
@@ -115,6 +117,8 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = 
         }
       
         addEmployeeHrm(updatedEmployee,endUser?._id,token,designation).then(data => {
+            console.log(data);
+            
             if(data.success){
                 toast.success("Employee Added Successfully")
                 setIsFormOpen(false)
@@ -518,6 +522,25 @@ const EmployeeManageForm = ({type = "add",setIsFormOpen = f => f, employee_id = 
                         required
                         value={gis}
                         onChange={e => handleChange(e, 'gis')}
+                    />
+                </div>
+
+                <div>
+                    <label
+                        htmlFor="description"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                        Other Deductions
+                    </label>
+                    <input
+                        type="number"
+                        name="brand"
+                        id="brand"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Other deductions"
+                        required
+                        value={other_deductions}
+                        onChange={e => handleChange(e, 'other_deductions')}
                     />
                 </div>
 

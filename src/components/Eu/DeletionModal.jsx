@@ -14,6 +14,8 @@ const DeletionModal = ({setIsConfirmationOpen = f => f, employee_id, setToRemove
     const handleDelete = () => {
         // API call to delete employee
         deleteEmployeeHrm(endUser?._id,token,employee_id).then(data => {
+          console.log(data);
+          
             if(data.success){
                 toast.error('Employee deleted successfully.')
                 setToRemove(employee_id)

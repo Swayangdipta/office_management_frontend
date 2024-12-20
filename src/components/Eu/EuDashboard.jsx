@@ -16,7 +16,7 @@ const EuDashboard = () => {
     return (
       <>
         <Card title="Employees" Icon={FaUsers} link='/employees' />
-        <Card title="Remittances" Icon={RiBankLine} link='/remittances' />
+        <Card title="Remittances" Icon={RiBankLine} link='/remittance' />
         <Card title="Reports" Icon={BiSolidReport} link='/reports' />
       </>
     )

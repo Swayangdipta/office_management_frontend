@@ -5,8 +5,10 @@ import { RiAdminLine, RiTeamLine } from 'react-icons/ri'
 import { FaRegChartBar, FaRegCreditCard, FaStore, FaCaretLeft, FaUsers, FaCubes, FaUserTie, FaBoxOpen, FaWarehouse, FaFileInvoiceDollar } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { useAuthContext } from '../../context/AuthContext'
 
 const Sidebar = ({setIsOpen = f => f, isOpen}) => {
+    const {auth} = useAuthContext()
   return (
     <div className='relative'>
         <FaCaretLeft
@@ -18,97 +20,105 @@ const Sidebar = ({setIsOpen = f => f, isOpen}) => {
 
         <div id='sidebar' className={`${isOpen ? 'w-[200px]' : 'w-[0px]'} h-[100vh] bg-zinc-100 border-r border-sky-500 fixed left-0 top-0 duration-700 overflow-y-scroll overflow-x-hidden`}>
         
-        <div className={`mt-[140px] px-[20px] pb-8 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
-            <h1 className='text-[18px]'>Admin Only</h1>
-            <ul className=' mt-[10px]'>
-                <li>
-                    <Link to="/admin/end-users" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <FaUsers />
-                        End User
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/admin/asset-category" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <BiCategory />
-                        Asset Category
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/admin/asset-type" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <MdOutlineSettingsApplications />
-                        Asset Type
-                    </Link>
-                </li>
+        <div className={`mt-[150px] px-[20px] pb-8 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+            {
+                auth.admin.role === 'agency_adm' ? (
+                    <>
+                        <h1 className='text-[18px] mt-[10px]'>HR Module</h1>
+                        <ul className=' mt-[10px]'>
+                            <li>
+                                <Link to="/admin/employees" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <FaUsers />
+                                    Employees
+                                </Link>
+                            </li>
+                        </ul>
 
-                <li>
-                    <Link to="/admin/stock-type" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <FaCubes />
-                        Stock Type
-                    </Link>
-                </li>
+                        <h1 className='text-[18px] mt-[10px]'>Store Module</h1>
+                        <ul className=' mt-[10px]'>
+                            <li>
+                                <Link to="/admin/asset" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <FaBoxOpen />
+                                    Assets
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/stock" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <FaWarehouse />
+                                    Stocks
+                                </Link>
+                            </li>
+                        </ul>
 
-                <li>
-                    <Link to="/admin/designations" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <FaUserTie />
-                        Designations
-                    </Link>
-                </li>
+                        <h1 className='text-[18px] mt-[10px]'>Accounts Module</h1>
+                        <ul className=' mt-[10px]'>
+                            <li>
+                                <Link to="/admin/party" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <MdOutlineBusiness />
+                                    Party Master
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/voucher" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <FaFileInvoiceDollar />
+                                    Voucher
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/bank-reconsiliation" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <MdAccountBalance />
+                                    Bank Reconciliation
+                                </Link>
+                            </li>
+                        </ul>
+                    </>
+                ) : (
+                    <>
+                        <h1 className='text-[18px]'>Admin Only</h1>
+                        <ul className=' mt-[10px]'>
+                            <li>
+                                <Link to="/admin/end-users" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <FaUsers />
+                                    End User
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/asset-category" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <BiCategory />
+                                    Asset Category
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/asset-type" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <MdOutlineSettingsApplications />
+                                    Asset Type
+                                </Link>
+                            </li>
 
-                <li>
-                    <Link to="/admin/reports" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <FaRegChartBar />
-                        Reports
-                    </Link>
-                </li>
-            </ul>
+                            <li>
+                                <Link to="/admin/stock-type" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <FaCubes />
+                                    Stock Type
+                                </Link>
+                            </li>
 
-            <h1 className='text-[18px] mt-[10px]'>HR Module</h1>
-            <ul className=' mt-[10px]'>
-                <li>
-                    <Link to="/admin/employees" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <FaUsers />
-                        Employees
-                    </Link>
-                </li>
-            </ul>
+                            <li>
+                                <Link to="/admin/designations" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <FaUserTie />
+                                    Designations
+                                </Link>
+                            </li>
 
-            <h1 className='text-[18px] mt-[10px]'>Store Module</h1>
-            <ul className=' mt-[10px]'>
-                <li>
-                    <Link to="/admin/asset" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <FaBoxOpen />
-                        Assets
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/admin/stock" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <FaWarehouse />
-                        Stocks
-                    </Link>
-                </li>
-            </ul>
-
-            <h1 className='text-[18px] mt-[10px]'>Accounts Module</h1>
-            <ul className=' mt-[10px]'>
-                <li>
-                    <Link to="/admin/party" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <MdOutlineBusiness />
-                        Party Master
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/admin/voucher" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <FaFileInvoiceDollar />
-                        Voucher
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/admin/bank-reconsiliation" class="flex gap-1 items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        <MdAccountBalance />
-                        Bank Reconciliation
-                    </Link>
-                </li>
-            </ul>
+                            <li>
+                                <Link to="/admin/reports" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <FaRegChartBar />
+                                    Reports
+                                </Link>
+                            </li>
+                        </ul>
+                    </>
+                )
+            }
         </div>
     </div>
     </div>
