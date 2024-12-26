@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import * as XLSX from "xlsx";
 import Navbar from "../base/Navbar";
 import Sidebar from "../admin/Sidebar";
+import TrialBalance from "./TrialBalance";
 
 const ReportsAm = ({ type = 'eu' }) => {
   const [activeTab, setActiveTab] = useState("trialBalance");
@@ -105,6 +106,8 @@ const ReportsAm = ({ type = 'eu' }) => {
           </tr>
         </tbody>
       </table>
+
+      <TrialBalance />
     </div>
   );
 

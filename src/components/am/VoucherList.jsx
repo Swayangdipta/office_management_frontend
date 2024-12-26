@@ -136,16 +136,18 @@ const VouchersList = ({type = 'eu'}) => {
               <div>
                 <Table striped={true}>
                   <Table.Head>
-                    <Table.HeadCell>Account Head</Table.HeadCell>
-                    <Table.HeadCell>Type</Table.HeadCell>
-                    <Table.HeadCell>Amount</Table.HeadCell>
+                    <Table.HeadCell>Major Head</Table.HeadCell>
+                    <Table.HeadCell>Sub-Major Head</Table.HeadCell>
+                    <Table.HeadCell>Credit</Table.HeadCell>
+                    <Table.HeadCell>Debit</Table.HeadCell>
                   </Table.Head>
                   <Table.Body>
                     {theTransactions.transactions.map((transaction, idx) => (
                       <Table.Row key={idx}>
                         <Table.Cell>{transaction.accountHead.name}</Table.Cell>
-                        <Table.Cell>{transaction.type}</Table.Cell>
-                        <Table.Cell>{transaction.amount}</Table.Cell>
+                        <Table.Cell>{transaction?.subMajorHead?.name || '-'}</Table.Cell>
+                        <Table.Cell>{transaction.credit || '-'}</Table.Cell>
+                        <Table.Cell>{transaction.debit || '-'}</Table.Cell>
                       </Table.Row>
                     ))}
                   </Table.Body>

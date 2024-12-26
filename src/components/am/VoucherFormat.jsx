@@ -71,10 +71,10 @@ const calculateTotals = (transactions) => {
   // Calculate Debit and Credit totals
   const totals = transactions.reduce(
     (acc, transaction) => {
-      if (transaction.type === "Debit") {
-        acc.debit += transaction.amount || 0;
-      } else if (transaction.type === "Credit") {
-        acc.credit += transaction.amount || 0;
+      if (transaction.debit > 0 ) {
+        acc.debit += transaction.debit || 0;
+      } else if (transaction.credit > 0) {
+        acc.credit += transaction.credit || 0;
       }
       return acc;
     },
@@ -130,8 +130,8 @@ const handlePrint = useReactToPrint({
           <tr>
             <th scope="col" className="py-1">Date</th>
             <th scope="col" className="py-1">Account Head Name / Type</th>
-            <th scope="col" className="py-1">Debit (Rs.)</th>
-            <th scope="col" className="py-1">Credit (Rs.)</th>
+            <th scope="col" className="py-1">Debit (Nu.)</th>
+            <th scope="col" className="py-1">Credit (Nu.)</th>
           </tr>
         </thead>
         <tbody>
@@ -146,10 +146,10 @@ const handlePrint = useReactToPrint({
                   {transaction.accountHead.name || '-'} / {transaction.accountHead.type || '-'}
                 </td>
                 <td className="py-1">
-                  {transaction.type === 'Debit' ? transaction.amount : '-'}
+                  {transaction.debit || '-'}
                 </td>
                 <td className="py-1">
-                  {transaction.type === 'Credit' ? transaction.amount : '-'}
+                  {transaction.credit || '-'}
                 </td>
               </tr>
             ))
@@ -167,8 +167,8 @@ const handlePrint = useReactToPrint({
       </table>
 
         <div className='text-[10px] text-black mt-4'>
-          <p><b>Passed for Rs.:</b> {calculateTotals(voucher.transactions).debit.toFixed(2) + '( Rupees ' + numberToText(calculateTotals(voucher.transactions).debit) + ' only )'}</p>
-          <p><b>Net Payment Rs.:</b> {calculateTotals(voucher.transactions).credit.toFixed(2) + '( Rupees ' + numberToText(calculateTotals(voucher.transactions).credit) + ' only )'}</p>
+          <p><b>Passed for Nu.:</b> {calculateTotals(voucher.transactions).debit.toFixed(2) + '( Ngultrum ' + numberToText(calculateTotals(voucher.transactions).debit) + ' only )'}</p>
+          <p><b>Net Payment Nu.:</b> {calculateTotals(voucher.transactions).credit.toFixed(2) + '( Ngultrum ' + numberToText(calculateTotals(voucher.transactions).credit) + ' only )'}</p>
         </div>
 
         <div className='text-[10px] text-black mt-4'>
@@ -185,7 +185,7 @@ const handlePrint = useReactToPrint({
 
             <div className='text-[10px] text-black mt-4'>
               <p>Received Payment</p>
-              <p>Rs. {calculateTotals(voucher.transactions).credit.toFixed(2)}</p>
+              <p>Nu. {calculateTotals(voucher.transactions).credit.toFixed(2)}</p>
               <p className='mt-6'>Name, Signature & Date.</p>
             </div>
           </div>

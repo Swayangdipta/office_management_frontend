@@ -27,7 +27,7 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
   const fetchDependencies = async () => {
     try {
       const [headRes, assetRes, stockRes] = await Promise.all([
-        getAccountingHeads(admin._id, token), // Fetch existing accounting heads
+        getAccountingHeads(admin._id, token, 'major'), // Fetch existing accounting heads
         getAssetsSars(admin._id, token),          // Fetch assets
         getStocksSars(admin._id, token),          // Fetch stocks
       ]);
@@ -170,7 +170,7 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
             value={formData.type}
             onChange={handleChange}
             required
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
           >
             <option value="major">Major</option>
             <option value="sub-major">Sub-Major</option>
@@ -180,15 +180,15 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
         {/* Parent Dropdown */}
         {formData.type === 'sub-major' && (
           <div>
-            <label htmlFor="parent" className="block text-sm font-semibold text-gray-700">Parent</label>
+            <label htmlFor="parent" className="block text-sm font-semibold text-gray-700">Major Account Head</label>
             <select
               name="parent"
               id="parent"
               value={formData.parent}
               onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
             >
-              <option value="">Select Parent</option>
+              <option value="">Select Major Account Head</option>
               {accountHeads.map((head) => (
                 <option key={head._id} value={head._id}>{head.name}</option>
               ))}
