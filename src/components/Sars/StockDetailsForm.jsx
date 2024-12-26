@@ -212,12 +212,17 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
           />
         </div>
 
-        <select
+        <div>
+          <label htmlFor="accountingHead" className="block text-sm font-semibold text-gray-700">
+            Accounting Head
+          </label>
+
+          <select
             name="accountingHead"
             value={formData.accountingHead}
             onChange={handleChange}
             id="accountingHead"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+            className="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
           >
             <option value="">Select Accounting Head</option>
             {allHeads.length > 0 &&
@@ -227,6 +232,7 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
                 </option>
               ))}
           </select>
+        </div>
 
         <button
           type="submit"

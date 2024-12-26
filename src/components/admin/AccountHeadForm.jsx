@@ -3,6 +3,7 @@ import { createAccountHead, updateAccountHead, getAccountingHeads, getAssets, ge
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../../context/AuthContext';
 import { MdClose } from 'react-icons/md';
+import { getAssetsSars, getStocksSars } from '../Sars/helper/sarsApiCalls';
 
 const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onFormSubmit = f => f , modulee = "major"}) => {
   const [formData, setFormData] = useState({
@@ -27,8 +28,8 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
     try {
       const [headRes, assetRes, stockRes] = await Promise.all([
         getAccountingHeads(admin._id, token), // Fetch existing accounting heads
-        getAssets(admin._id, token),          // Fetch assets
-        getStocks(admin._id, token),          // Fetch stocks
+        getAssetsSars(admin._id, token),          // Fetch assets
+        getStocksSars(admin._id, token),          // Fetch stocks
       ]);
 
       if (headRes.success) setAccountHeads(headRes.data.accountingHeads);
