@@ -92,7 +92,7 @@ const AssetDetailsForm = ({ assets = [], setAssets = f => f, type = 'add', asset
   };
 
   const getAccountHeads = () => {
-    getAllAccountHeadAM(auth.endUser?._id, token).then((data) => {
+    getAllAccountHeadAM(auth.endUser?._id, token, 'major').then((data) => {
       console.log(data);
       
       if (data.success) {

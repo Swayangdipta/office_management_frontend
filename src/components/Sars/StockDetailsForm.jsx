@@ -94,17 +94,17 @@ const StockDetailsForm = ({ assets, setAssets = f => f, type = 'add', asset, set
   };
 
   const getAccountHeads = () => {
-    getAllAccountHeadAM(auth.endUser?._id, token).then((data) => {
+    getAllAccountHeadAM(auth.endUser?._id, token, 'major').then((data) => {
       console.log(data);
       
       if (data.success) {
         setAllHeads(data.data.accountingHeads);
       } else {
-        toast.error('Something went wrong while fetching asset types');
+        toast.error('Something went wrong while fetching accounting heads');
       }
     }).catch((error) => {
       console.error(error);
-      toast.error('Error fetching asset types');
+      toast.error('Error fetching accounting heads');
     });
   };
 

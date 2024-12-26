@@ -169,7 +169,7 @@ export const getAllAccountHeadAM = (userId,token, type) => {
             return error
         })        
       } catch (error) {
-        console.error('Error deleting party', error);
+        console.error('Error fetching account heads', error);
       }
 }
 
