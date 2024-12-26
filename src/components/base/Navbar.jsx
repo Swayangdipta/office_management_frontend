@@ -2,9 +2,9 @@ import React from 'react'
 import { useAuthContext } from '../../context/AuthContext'
 import { Link, Navigate } from 'react-router-dom'
 import { removeAuthFromSessionStorage } from '../../utils/ls.util'
-import {MdAccountBalance, MdDashboard, MdOutlineBusiness, MdOutlineSettingsApplications, MdReport} from 'react-icons/md'
+import {MdAccountBalance, MdAccountTree, MdDashboard, MdOutlineBusiness, MdOutlineSettingsApplications, MdReport} from 'react-icons/md'
 import { RiAdminLine, RiTeamLine } from 'react-icons/ri'
-import { FaBoxOpen, FaCubes, FaFileInvoiceDollar, FaRegChartBar, FaRegCreditCard, FaStore, FaUsers, FaUserTie, FaWarehouse } from 'react-icons/fa'
+import { FaBoxOpen, FaCubes, FaFileInvoiceDollar, FaRegChartBar, FaRegCreditCard, FaStore, FaUserCheck, FaUsers, FaUserTie, FaWarehouse } from 'react-icons/fa'
 import { BiCategory } from 'react-icons/bi'
 
 const Navbar = ({type = 'eu'}) => {
@@ -51,6 +51,20 @@ const Navbar = ({type = 'eu'}) => {
                 <Link to="/admin/designations" class="flex gap-1 items-center px-1 py-2 text-sm text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                     <FaUserTie />
                     Designations
+                </Link>
+            </li>
+
+            <li>
+                <Link to="/admin/major" class="flex gap-1 items-center px-1 py-2 text-sm text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    <MdAccountTree />
+                    Major Accounts Head
+                </Link>
+            </li>
+
+            <li>
+                <Link to="/admin/sub-major" class="flex gap-1 items-center px-1 py-2 text-sm text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    <MdAccountTree />
+                    Sub-Major Accounts Head
                 </Link>
             </li>
 
@@ -106,7 +120,7 @@ const Navbar = ({type = 'eu'}) => {
             </li>
 
             <li>
-                <Link to="/admin/accounts" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
+                <Link to="/admin" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
                     <FaRegCreditCard />
                     Accounts
 
@@ -137,6 +151,13 @@ const Navbar = ({type = 'eu'}) => {
                             </Link>
                         </li>
                     </div>
+                </Link>
+            </li>
+
+            <li>
+                <Link to="/admin/approving-authority" class="flex gap-1 items-center justify-center px-4 text-sm text-zinc-50 hover:text-zinc-100 relative top-0 group">
+                    <FaUserCheck />
+                    Approving Authority
                 </Link>
             </li>
 

@@ -347,9 +347,9 @@ export const updateAccountHead = async (userId, token, accountHeadId, data) => {
     }
 };
 
-export const getAccountHeads = async (userId, token) => {
+export const getAccountHeads = async (userId, token, type) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/admin/accounting-head/${userId}`,{}, {
+        return axios.post(`${env.VITE_BACKEND}/admin/accounting-head/${userId}`,{type}, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
@@ -417,8 +417,8 @@ export const getStocks = (id, token) => {
     });
 }
 
-export const getAccountingHeads = (id, token) => {  
-    return axios.post(`${env.VITE_BACKEND}/admin/accounting-head/${id}`, {}, {
+export const getAccountingHeads = (id, token, type) => {  
+    return axios.post(`${env.VITE_BACKEND}/admin/accounting-head/${id}`, {type}, {
         headers:{
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -678,6 +678,43 @@ export const getFourTransactions = (id,token) => {
             })
 }
 
+export const createApprovingAuthority = (id,token,data) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/admin/approving-authority`,data,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error fetching types', error);
+      }
+}
+
+export const deleteApprovingAuthority = (id,token,authorityId) => {
+    try {
+        return axios.delete(`${env.VITE_BACKEND}/admin/approving-authority/${authorityId}`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error fetching types', error);
+      }
+}
 const apiCall = async (url, token, params = {}) => {
     try {
       const response = await axios.get(`${env.VITE_BACKEND}${url}`, {

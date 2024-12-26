@@ -27,6 +27,7 @@ import PayGenerations from './components/Eu/PayGenerations.jsx'
 import Remittances from './components/Eu/Remittances.jsx'
 import PayBillPosting from './components/Eu/PayBill.jsx'
 import BankStatement from './components/am/BankStatement.jsx'
+import ApprovingAuthority from './components/admin/ApprovingAuthority.jsx'
 function Routing() {
   const {auth,setAuth} = useAuthContext()
 
@@ -58,6 +59,9 @@ function Routing() {
           <Route path='/admin/hrreports' element={auth && auth.admin ? <ReportsHrm type='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/party' element={auth && auth.admin ? <PartyMasterPage type='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/voucher' element={auth && auth.admin ? <VoucherForm typee='admin' /> : <Navigate to='/' />} />
+          <Route path='/admin/major' element={auth && auth.admin ? <AccountHeadManagement /> : <Navigate to='/' />} />
+          <Route path='/admin/sub-major' element={auth && auth.admin ? <AccountHeadManagement modulee='sub-major' /> : <Navigate to='/' />} />
+          <Route path='/admin/approving-authority' element={auth && auth.admin ? <ApprovingAuthority type='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/bank-reconsiliation' element={auth && auth.admin ? <BankReconciliation typee='admin' /> : <Navigate to='/' />} />
           <Route path='/admin/bank-statement' element={auth && auth.admin ? <BankStatement type='admin' /> : <Navigate to='/' />} />
           <Route path='/employees' element={auth && auth.endUser && auth.endUser.role === "HRM"  ? <Employees /> : <Navigate to='/' />} />

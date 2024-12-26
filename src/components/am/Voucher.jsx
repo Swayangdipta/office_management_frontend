@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import Navbar from '../base/Navbar';
-import { createVoucher, getAllAccountHeadAM, getParties, updateVoucher } from './helper/amApiCalls';
+import { createVoucher, getAllAccountHeadAM, getAllAccountSubHeadAM, getApprovingAuthorityAM, getParties, updateVoucher } from './helper/amApiCalls';
 import { useAuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import { MdClose } from 'react-icons/md';
@@ -11,7 +11,11 @@ import Sidebar from '../admin/Sidebar';
 const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
   const [payees, setPayees] = useState([]);
   const [accountHeads, setAccountHeads] = useState([]);
+  const [subMajorHeads, setSubMajorHeads] = useState([]);
+  const [subMajorHead, setSubMajorHead] = useState(null);
+  const [tempHead, setTempHead] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [approvingAuthorities, setApprovingAuthorities] = useState([])
 
   const { auth } = useAuthContext();
   const { endUser, token } = auth;
@@ -26,7 +30,10 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
           toast.error('Failed to load payees.');
         }
 
-        const accountHeadResponse = await getAllAccountHeadAM(endUser?._id, token);
+        const accountHeadResponse = await getAllAccountHeadAM(endUser?._id, token, 'major');
+        console.log(accountHeadResponse);
+        
+
         if (accountHeadResponse.success) {
           setAccountHeads(accountHeadResponse.data.accountingHeads);
         } else {
@@ -41,11 +48,42 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
     fetchData();
   }, [endUser?._id, token]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const accountSubMajorResponse = await getAllAccountSubHeadAM(endUser?._id, token, 'sub-major', tempHead);
+
+      if (accountSubMajorResponse.success) {
+        setSubMajorHeads(accountSubMajorResponse.data.accountingHeads);
+      } else {
+        toast.error('Failed to load account heads.');
+      }
+    }
+
+    fetchData();
+
+  },[tempHead])
+
+  useEffect(() => {
+    const fetchApprovingAuthorities = async () => {
+      try {
+        const response = await getApprovingAuthorityAM(endUser?._id, token);
+        if (response.success) {
+          setApprovingAuthorities(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch approving authorities:', error);
+      }
+    }
+
+    fetchApprovingAuthorities();
+  },[])
+
   const formik = useFormik({
     initialValues: {
       entryDate: voucher ? new Date(voucher.entryDate).toISOString().split('T')[0] : '',
       voucherType: voucher?.voucherType || '',
       payee: voucher?.payee?._id || null,
+      approvingAuthority: voucher?.approvingAuthority?._id || null,
       narration: voucher?.narration || '',
       transactions: voucher?.transactions || [],
     },
@@ -79,11 +117,11 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
       if (!values.voucherType) errors.voucherType = 'Required';
       if (!values.narration) errors.narration = 'Required';
       const debitTotal = values.transactions
-        .filter((t) => t.type === 'Debit')
-        .reduce((sum, t) => sum + Number(t.amount), 0);
+        .filter((t) => t.debit > 0)
+        .reduce((sum, t) => sum + Number(t.debit), 0);
       const creditTotal = values.transactions
-        .filter((t) => t.type === 'Credit')
-        .reduce((sum, t) => sum + Number(t.amount), 0);
+        .filter((t) => t.credit > 0)
+        .reduce((sum, t) => sum + Number(t.credit), 0);
       if (debitTotal !== creditTotal) {
         errors.transactions = 'Debit and Credit amounts must balance';
       }
@@ -99,7 +137,9 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
   };
 
   const addTransaction = () => {
-    const newTransaction = { accountHead: '', type: '', amount: 0 };
+    const newTransaction = { accountHead: '', type: '', credit: '', debit: '', subMajorHead: ''};
+    
+    newTransaction.subMajorHead = subMajorHead
     formik.setFieldValue('transactions', [...formik.values.transactions, newTransaction]);
   };
 
@@ -168,6 +208,29 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
           </div>
 
           <div className="mb-4">
+            <label htmlFor="voucherType" className="block text-sm font-medium text-gray-700">
+              Approving Authority
+            </label>
+            <select
+              id="approvingAuthority"
+              name="approvingAuthority"
+              value={formik.values.approvingAuthority}
+              onChange={formik.handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            >
+              <option value="" label="Select approving authority" />
+              {approvingAuthorities.map((authority) => (
+                <option key={authority._id} value={authority._id}>
+                  {authority.name}
+                </option>
+              ))}
+            </select>
+            {formik.errors.voucherType && (
+              <p className="text-red-500">{formik.errors.voucherType}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
             <label htmlFor="payee" className="block text-sm font-medium text-gray-700">
               Payee
             </label>
@@ -209,13 +272,16 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
             <h3 className="text-lg font-bold mb-2">Transactions</h3>
             {formik.values.transactions.map((transaction, index) => (
               <div key={index} className="flex space-x-4 mb-2">
-                <div className="w-1/3">
+                <div className="w-1/4">
                   <select
                     value={transaction.accountHead}
-                    onChange={(e) => handleTransactionChange(index, 'accountHead', e.target.value)}
+                    onChange={(e) => {
+                      handleTransactionChange(index, 'accountHead', e.target.value)
+                      setTempHead(e.target.value)
+                    }}
                     className="block w-full p-2 border border-gray-300 rounded-md"
                   >
-                    <option value="" label="Select Account Head" />
+                    <option value="" label="Select Major Head" />
                     {accountHeads.map((accountHead) => (
                       <option key={accountHead._id} value={accountHead._id}>
                         {accountHead.name}
@@ -223,23 +289,36 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
                     ))}
                   </select>
                 </div>
-                <div className="w-1/3">
+                <div className="w-1/4">
                   <select
-                    value={transaction.type}
-                    onChange={(e) => handleTransactionChange(index, 'type', e.target.value)}
+                    value={transaction.subMajorHead}
+                    onChange={(e) => handleTransactionChange(index, 'subMajorHead', e.target.value)}
                     className="block w-full p-2 border border-gray-300 rounded-md"
                   >
-                    <option value="" label="Select Type" />
-                    <option value="Debit" label="Debit" />
-                    <option value="Credit" label="Credit" />
+                    <option value="" label={transaction.subMajorHead === '' ? 'Selected' : 'Select Sub Major Head'} />
+                    {subMajorHeads.map((accountHead) => (
+                      <option key={accountHead._id} value={accountHead._id}>
+                        {accountHead.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
-                <div className="w-1/3 flex items-center space-x-2">
+                <div className="w-1/4">
+                   <input
+                   type="number"
+                   value={transaction.debit}
+                   onChange={(e) => handleTransactionChange(index, 'debit', e.target.value)}
+                   className="block w-full p-2 border border-gray-300 rounded-md text-rose-500"
+                   placeholder='Debit Amount'
+                 />
+                </div>
+                <div className="w-1/4 flex items-center space-x-2">
                   <input
                     type="number"
-                    value={transaction.amount}
-                    onChange={(e) => handleTransactionChange(index, 'amount', e.target.value)}
-                    className="block w-full p-2 border border-gray-300 rounded-md"
+                    value={transaction.credit}
+                    onChange={(e) => handleTransactionChange(index, 'credit', e.target.value)}
+                    className="block w-full p-2 border border-gray-300 rounded-md text-green-500"
+                    placeholder='Credit Amount'
                   />
                   <button
                     type="button"
@@ -251,13 +330,19 @@ const VoucherForm = ({ voucher = null, onClose = () => {}, typee = 'eu' }) => {
                 </div>
               </div>
             ))}
-            <button
-              type="button"
-              onClick={addTransaction}
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Add Transaction
-            </button>
+
+            {
+              formik.values.transactions.length === 0 && (
+                <button
+                  type="button"
+                  onClick={addTransaction}
+                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+                >
+                  Add Transaction
+                </button>                
+              )
+            }
+
           </div>
 
           {formik.errors.transactions && (

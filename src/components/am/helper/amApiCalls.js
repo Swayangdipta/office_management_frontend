@@ -154,9 +154,28 @@ export const deleteVoucher = (userId,token,voucherId) => {
       }
 }
 
-export const getAllAccountHeadAM = (userId,token) => {
+export const getAllAccountHeadAM = (userId,token, type) => {
     try {
-        return axios.post(`${env.VITE_BACKEND}/am/voucher/ah`,{},{
+        return axios.post(`${env.VITE_BACKEND}/am/voucher/ah`,{type},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error deleting party', error);
+      }
+}
+
+export const getAllAccountSubHeadAM = (userId, token, type, parent) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/am/voucher/ahs`,{type,parent},{
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -264,6 +283,25 @@ export const closeYear = (userId,token) => {
         })        
       } catch (error) {
         console.error('Error deleting party', error);
+      }
+}
+
+export const getApprovingAuthorityAM = (userId, token) => {
+    try {
+        return axios.post(`${env.VITE_BACKEND}/am/approving-authorities`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                }
+        }).then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log(error);
+            return error
+        })        
+      } catch (error) {
+        console.error('Error feching authorities', error);
       }
 }
 

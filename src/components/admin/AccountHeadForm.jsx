@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { createAccountHead, updateAccountHead, getAccountingHeads, getAssets, getStocks } from './helper/adminApiCalls'; // Assume API helper functions
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../../context/AuthContext';
+import { MdClose } from 'react-icons/md';
 
-const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onFormSubmit = f => f }) => {
+const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onFormSubmit = f => f , modulee = "major"}) => {
   const [formData, setFormData] = useState({
     name: '',
-    type: 'major',
+    code: '',
+    type: modulee === 'major' ? 'major' : 'sub-major',
     parent: '',
     asset: false,
     description: '',
@@ -53,6 +55,10 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
       });
     }
   }, [type, accountHead]);
+
+  useEffect(() => {
+    setFormData({...formData, type: modulee === 'major' ? 'major' : 'sub-major'});
+  }, [modulee]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -116,12 +122,32 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
   };
 
   return (
-    <div className="p-5 mt-[130px] bg-slate-200 border-b border-sky-500 relative">
+    <div className={`p-5 ${type === 'add' ? 'mt-[130px]' : 'mt-[40px]'} bg-slate-200 border-b border-sky-500 relative top-0`}>
       <h2 className="text-2xl font-semibold text-sky-600">
         {type === 'add' ? 'Add Accounting Head' : 'Edit Accounting Head'}
       </h2>
+
+      {
+        type === 'edit' && (
+          <MdClose onClick={e => setIsEditing(false)} className='absolute top-[-20px] right-[-20px] bg-rose-500 rounded-full text-[40px] p-2 text-zinc-50 cursor-pointer' />
+        )
+      }
       <form onSubmit={handleSubmit} className="mt-6 grid grid-cols-2 gap-4">
         {/* Name and Type */}
+
+        <div>
+          <label htmlFor="code" className="block text-sm font-semibold text-gray-700">Code</label>
+          <input
+            type="text"
+            name="code"
+            id="code"
+            value={formData.code}
+            onChange={handleChange}
+            required
+            className="mt-1 block w-full p-2.5 border border-gray-300 rounded-md"
+          />
+        </div>
+
         <div>
           <label htmlFor="name" className="block text-sm font-semibold text-gray-700">Name</label>
           <input
@@ -170,7 +196,7 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
         )}
 
         {/* Sync with SARS */}
-        <div>
+        {/* <div>
           <label htmlFor="asset" className="block text-sm font-semibold text-gray-700">Sync with SARS</label>
           <input
             type="checkbox"
@@ -180,7 +206,7 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
             onChange={handleChange}
             className="mt-2"
           />
-        </div>
+        </div> */}
 
         {/* Description */}
         <div className="col-span-2">

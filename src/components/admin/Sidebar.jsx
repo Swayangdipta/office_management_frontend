@@ -1,6 +1,6 @@
 import React from 'react'
 import { BiCaretLeft, BiCategory } from 'react-icons/bi'
-import {MdAccountBalance, MdAttachMoney, MdDashboard, MdOutlineBusiness, MdOutlineCorporateFare, MdOutlineSettingsApplications, MdReport} from 'react-icons/md'
+import {MdAccountBalance, MdAccountTree, MdAttachMoney, MdDashboard, MdOutlineBusiness, MdOutlineCorporateFare, MdOutlineSettingsApplications, MdReport} from 'react-icons/md'
 import { RiAdminLine, RiTeamLine } from 'react-icons/ri'
 import { FaRegChartBar, FaRegCreditCard, FaStore, FaCaretLeft, FaUsers, FaCubes, FaUserTie, FaBoxOpen, FaWarehouse, FaFileInvoiceDollar } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
@@ -113,6 +113,20 @@ const Sidebar = ({setIsOpen = f => f, isOpen}) => {
                                 <Link to="/admin/designations" class="flex gap-1 items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                     <FaUserTie />
                                     Designations
+                                </Link>
+                            </li>
+
+                            <li>
+                                <Link to="/admin/major" class="flex gap-1 items-center px-1 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <MdAccountTree />
+                                    Major Accounts Head
+                                </Link>
+                            </li>
+                
+                            <li>
+                                <Link to="/admin/sub-major" class="flex gap-1 items-center px-1 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <MdAccountTree />
+                                    Sub-Major Accounts Head
                                 </Link>
                             </li>
 

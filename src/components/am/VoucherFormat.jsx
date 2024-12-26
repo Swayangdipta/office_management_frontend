@@ -173,7 +173,7 @@ const handlePrint = useReactToPrint({
 
         <div className='text-[10px] text-black mt-4'>
           <p><b>Prepared & Approved by:</b></p>
-          <p><b>Name:</b> Account Manager</p>
+          <p><b>Name:</b> {voucher.approvingAuthority ? voucher.approvingAuthority.name : 'N/A'}</p>
           <p><b>Date:</b> {voucher.entryDate.split('T')[0]}</p>
         </div>
 

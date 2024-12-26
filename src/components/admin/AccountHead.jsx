@@ -6,7 +6,7 @@ import DeleteConfirmation from './DeleteConfirmation';
 import { getAccountHeads, deleteAccountHead } from './helper/adminApiCalls'; // Import API functions
 import { useAuthContext } from '../../context/AuthContext';
 
-const AccountHead = () => {
+const AccountHead = ({modulee = 'major'}) => {
   const [accountHeads, setAccountHeads] = useState([]);
   const [isEditing, setIsEditing] = useState(null);
   const [isDeleteOpen, setIsDeleteOpen] = useState(null);
@@ -17,7 +17,7 @@ const AccountHead = () => {
 
   // Fetch account heads
   const fetchAccountHeads = () => {
-    getAccountHeads(admin._id, token)
+    getAccountHeads(admin._id, token, modulee)
       .then((data) => {
         if (data.success) {
           setAccountHeads(data.data.accountingHeads);
@@ -28,7 +28,7 @@ const AccountHead = () => {
 
   useEffect(() => {
     fetchAccountHeads();
-  }, []);
+  }, [modulee]);
 
   // Handle delete
   const handleDelete = (id) => {
@@ -45,12 +45,17 @@ const AccountHead = () => {
     <div className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-3xl font-semibold text-sky-600">Account Heads</h2>
 
-      <Table hoverable={true}>
+      <Table hoverable={true} className='mt-10'>
         <Table.Head>
-          <Table.HeadCell>Major Head</Table.HeadCell>
-          <Table.HeadCell>Sub Major Head</Table.HeadCell>
-          <Table.HeadCell>Description</Table.HeadCell>
-          <Table.HeadCell>Actions</Table.HeadCell>
+          <Table.HeadCell className='bg-black text-zinc-50'>Code</Table.HeadCell>
+          {
+            modulee === 'sub-major' && (
+              <Table.HeadCell className='bg-black text-zinc-50'>Sub Major Head</Table.HeadCell>
+            )
+          }
+          <Table.HeadCell className='bg-black text-zinc-50'>Major Head</Table.HeadCell>
+          <Table.HeadCell className='bg-black text-zinc-50'>Description</Table.HeadCell>
+          <Table.HeadCell className='bg-black text-zinc-50'>Actions</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {accountHeads.length === 0 ? (
@@ -60,10 +65,15 @@ const AccountHead = () => {
           ) : (
             accountHeads.map((head) => (
               <Table.Row key={head._id}>
-                <Table.Cell>{head.parent ? head.parent.name : head.name}</Table.Cell>
-                <Table.Cell>{head.parent ? head.name : '---'}</Table.Cell>
-                <Table.Cell>{head.description !== '' ? head.description : '---'}</Table.Cell>
-                <Table.Cell>
+                <Table.Cell className='border'>{head.code ? head.code : 'N/A'}</Table.Cell>
+                {
+                  modulee === 'sub-major' && (
+                    <Table.Cell className='border'>{head.parent ? head.name : '---'}</Table.Cell>
+                  )
+                }
+                <Table.Cell className='border'>{head.parent ? head.parent.name : head.name}</Table.Cell>
+                <Table.Cell className='border'>{head.description !== '' ? head.description : '---'}</Table.Cell>
+                <Table.Cell className='border'>
                   <button
                     className="text-blue-500 hover:text-blue-700 mx-2"
                     onClick={() => setIsEditing(head)}
@@ -84,7 +94,7 @@ const AccountHead = () => {
       </Table>
 
       {isEditing && (
-        <div className="w-screen h-screen fixed top-0 left-0 bg-[#00000080] flex items-center justify-center">
+        <div className="w-screen h-screen fixed top-0 left-0 bg-[#00000080] z-[99999999] flex items-start justify-center">
           <AccountHeadForm
             accountHead={isEditing}
             setAccountHeads={setAccountHeads}

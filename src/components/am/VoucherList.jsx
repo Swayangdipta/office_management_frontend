@@ -177,7 +177,7 @@ const VouchersList = ({type = 'eu'}) => {
       {
         forPrint && (
           <div className='w-screen h-max flex items-center justify-center bg-[#00000080] fixed top-0 left-0 z-[99999999] p-4'>
-            <p onClick={e=>setForPrint(null)} className='w-[40px] h-[40px] absolute top-[30px] left-[200px] flex items-center justify-center text-white bg-rose-500 rounded-full text-[20px] cursor-pointer'><MdClose /></p>
+            <p onClick={e=>setForPrint(null)} className='w-[40px] h-[40px] absolute top-[30px] left-[200px] flex items-center justify-center text-white bg-rose-500 rounded-full text-[20px] cursor-pointer z-[999999999]'><MdClose /></p>
             <VoucherFormat voucher={forPrint} />
           </div>
         )
