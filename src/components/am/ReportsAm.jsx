@@ -7,6 +7,7 @@ import Navbar from "../base/Navbar";
 import Sidebar from "../admin/Sidebar";
 import TrialBalance from "./TrialBalance";
 import BalanceSheet from "./BalanceSheet";
+import ProfitAndLoss from "./ProfitAndLoss";
 
 const ReportsAm = ({ type = 'eu' }) => {
   const [activeTab, setActiveTab] = useState("trialBalance");
@@ -92,27 +93,7 @@ const ReportsAm = ({ type = 'eu' }) => {
 
   const renderProfitLoss = () => (
     <div className="overflow-x-auto">
-      <div className="mb-4">
-        <button onClick={() => exportToExcel([profitLoss], "ProfitLossReport")} className="bg-green-500 text-white px-4 py-2 rounded">
-          Export to Excel
-        </button>
-      </div>
-      <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-        <thead className="bg-sky-600 text-white">
-          <tr>
-            <th className="p-3 text-left border-b border-sky-700">Revenue</th>
-            <th className="p-3 text-left border-b border-sky-700">Expenses</th>
-            <th className="p-3 text-left border-b border-sky-700">Profit or Loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="hover:bg-gray-100">
-            <td className="p-3 border-b border-gray-200 text-emerald-500">+{profitLoss.revenue.toFixed(2)}</td>
-            <td className="p-3 border-b border-gray-200 text-rose-500">-{profitLoss.expenses.toFixed(2)}</td>
-            <td className={`p-3 border-b border-gray-200 font-semibold ${profitLoss.profitOrLoss > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>{profitLoss.profitOrLoss > 0 && '+'}{profitLoss.profitOrLoss.toFixed(2)}</td>
-          </tr>
-        </tbody>
-      </table>
+      <ProfitAndLoss />
     </div>
   );
 
