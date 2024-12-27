@@ -85,28 +85,6 @@ const ReportsAm = ({ type = 'eu' }) => {
 
   const renderTrialBalance = () => (
     <div className="overflow-x-auto">
-      <div className="mb-4">
-        <button onClick={() => exportToExcel([trialBalance], "TrialBalanceReport")} className="bg-green-500 text-white px-4 py-2 rounded">
-          Export to Excel
-        </button>
-      </div>
-      <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-        <thead className="bg-sky-600 text-white">
-          <tr>
-            <th className="p-3 text-left border-b border-sky-700">Debit Total</th>
-            <th className="p-3 text-left border-b border-sky-700">Credit Total</th>
-            <th className="p-3 text-left border-b border-sky-700">Is Balanced</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="hover:bg-gray-100">
-            <td className="p-3 border-b border-gray-200">{trialBalance.debitTotal}</td>
-            <td className="p-3 border-b border-gray-200">{trialBalance.creditTotal}</td>
-            <td className="p-3 border-b border-gray-200">{trialBalance.isBalanced ? "Yes" : "No"}</td>
-          </tr>
-        </tbody>
-      </table>
-
       <TrialBalance />
     </div>
   );
@@ -228,28 +206,6 @@ const ReportsAm = ({ type = 'eu' }) => {
 
       <div className={`w-full ${type === 'admin' && 'p-6'}`}>
         <h2 className="text-2xl font-semibold mb-6 mt-[130px]">Reports</h2>
-
-        {/* Date Pickers */}
-        <div className="mb-4 flex items-center">
-          <div className="mr-4">
-            <label className="block text-sm font-medium text-gray-700">Start Date</label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => handleDateChange("start", e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">End Date</label>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => handleDateChange("end", e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
-            />
-          </div>
-        </div>
 
         {/* Tab Controls */}
         <div className="mb-4 w-screen">
