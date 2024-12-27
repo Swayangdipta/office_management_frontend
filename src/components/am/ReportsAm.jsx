@@ -6,6 +6,7 @@ import * as XLSX from "xlsx";
 import Navbar from "../base/Navbar";
 import Sidebar from "../admin/Sidebar";
 import TrialBalance from "./TrialBalance";
+import BalanceSheet from "./BalanceSheet";
 
 const ReportsAm = ({ type = 'eu' }) => {
   const [activeTab, setActiveTab] = useState("trialBalance");
@@ -117,27 +118,7 @@ const ReportsAm = ({ type = 'eu' }) => {
 
   const renderBalanceSheet = () => (
     <div className="overflow-x-auto">
-      <div className="mb-4">
-        <button onClick={() => exportToExcel([balanceSheet], "BalanceSheetReport")} className="bg-green-500 text-white px-4 py-2 rounded">
-          Export to Excel
-        </button>
-      </div>
-      <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-        <thead className="bg-sky-600 text-white">
-          <tr>
-            <th className="p-3 text-left border-b border-sky-700">Total Assets</th>
-            <th className="p-3 text-left border-b border-sky-700">Total Liabilities</th>
-            <th className="p-3 text-left border-b border-sky-700">Equity</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="hover:bg-gray-100">
-            <td className="p-3 border-b border-gray-200">{balanceSheet.totalAssets}</td>
-            <td className="p-3 border-b border-gray-200">{balanceSheet.totalLiabilities}</td>
-            <td className="p-3 border-b border-gray-200">{balanceSheet.equity}</td>
-          </tr>
-        </tbody>
-      </table>
+      <BalanceSheet />
     </div>
   );
 
