@@ -20,6 +20,7 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
   const [accountHeads, setAccountHeads] = useState([]);
   const [allAssets, setAllAssets] = useState([]);
   const [allStocks, setAllStocks] = useState([]);
+  const [selectedMajorHead, setSelectedMajorHead] = useState(null)
 
   const { auth } = useAuthContext();
   const { admin, token } = auth;
@@ -67,6 +68,16 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
     }));
+
+    if(name === 'parent'){
+      accountHeads.map(head => {
+        if(head._id === value){
+          console.log(head);
+          
+          setSelectedMajorHead(head)
+        }
+      })
+    }
   };
 
   const addToAssets = (assetId) => {
@@ -162,23 +173,23 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
           />
         </div>
 
-        <div>
-          <label htmlFor="type" className="block text-sm font-semibold text-gray-700">Type</label>
-          <select
-            name="type"
-            id="type"
-            value={formData.type}
-            onChange={handleChange}
-            required
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
-          >
-            <option value="major">Major</option>
-            <option value="sub-major">Sub-Major</option>
-          </select>
-        </div>
-
         {/* Parent Dropdown */}
         {formData.type === 'sub-major' && (
+          <>
+          <div>
+            <label htmlFor="type" className="block text-sm font-semibold text-gray-700">Type</label>
+            <select
+              name="type"
+              id="type"
+              value={formData.type}
+              onChange={handleChange}
+              required
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
+            >
+              <option value="major">Major</option>
+              <option value="sub-major">Sub-Major</option>
+            </select>
+          </div>
           <div>
             <label htmlFor="parent" className="block text-sm font-semibold text-gray-700">Major Account Head</label>
             <select
@@ -194,6 +205,19 @@ const AccountHeadForm = ({ accountHead, type = 'add', setIsEditing = f => f, onF
               ))}
             </select>
           </div>
+
+          <div>
+            <label htmlFor="type" className="block text-sm font-semibold text-gray-700">Major Account Head Code</label>
+            <input
+              name="majorCode"
+              id="majorCode"
+              disabled
+              className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
+              placeholder='Select major head first'
+              value={ selectedMajorHead && selectedMajorHead?.code}
+            />
+          </div>
+          </>
         )}
 
         {/* Sync with SARS */}
